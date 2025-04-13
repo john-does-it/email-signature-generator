@@ -15,7 +15,7 @@
 
 <wrapper>
   <h1>
-    ✍️ Générateur de signature personnalisée pour RESA
+    ✍️ Générateur de signature d'email personnalisée pour RESA
   </h1>
   <form>
     <label for="first-name">
