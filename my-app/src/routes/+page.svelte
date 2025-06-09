@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { m } from './paraglide/messages.js'
+  import { onMount } from "svelte"
   
   /* root - +page.svelte */
   let colorCode: any 
@@ -48,6 +49,9 @@
 </svelte:head>
 
 <wrapper>
+  <p>
+    {m.example_message()}
+  </p>
   <h1>
     Générer votre signature d'email personnalisée
   </h1>
