@@ -1,12 +1,22 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "bonjour": "Hallo",
+  
+  "title": "✍️ Generator voor gepersonaliseerde e-mailhandtekeningen",
+  "metadescription": "Maak gratis en snel een professionele gepersonaliseerde e-mailhandtekening online.",
+  
   "genererVotreSignature": "Genereer je gepersonaliseerde e-mailsignatuur",
   "vosDonnees": "Je gegevens",
   "generateurDeStyle": "Stijlgenerator",
+  "langageSelectionne": "Taal",
+  "infoChangementLangue": "De taal wijzigen werkt de attributen <code>alt</code> en <code>title</code> bij in de gegenereerde HTML-code",
   "codeCouleur": "Kleurcode",
   "codeCouleurDeux": "Tweede kleurcode",
-  "taillePolice": "Lettergrootte",
+  "taille": "Grootte",
+  "tailleSmall": "Klein",
+  "tailleNormal": "Normaal",
+  "tailleLarge": "Groot",
+  "tailleXLarge": "Zeer groot",
   "vosInformations": "Jouw informatie",
   "nomSociete": "Bedrijfsnaam",
   "prenom": "Voornaam",
@@ -26,7 +36,7 @@
   "urlTiktok": "URL van je TikTokpagina",
   "urlX": "URL van je X-pagina",
   "previsualisation": "Voorbeeld",
-
+  
   "altFacebook": "Facebook-icoon",
   "altInstagram": "Instagram-icoon",
   "altLinkedin": "LinkedIn-icoon",
@@ -43,12 +53,13 @@
   "titleCompanyWebsite": "Bezoek de website van {companyName}",
   "emailTo": "Stuur een e-mail naar {firstName} {lastName} via {email}",
   "phoneCall": "Bel {firstName} {lastName} op {number}",
-
+  
   "tipNumeroFixe": "Formaat met landsnummer, zonder spaties (voorbeeld: +32424242)",
   "tipNumeroPortable": "Formaat met landsnummer, zonder spaties (voorbeeld: +32420424242)",
   "errorManquePlus": "🚨 Het '+' symbool ontbreekt",
   "errorNumeroFixeManquant": "🚨 Er ontbreken tekens. Het nummer moet 11 tekens bevatten, momenteel zijn het er slechts {count}.",
   "errorNumeroFixeTropLong": "🚨 Te veel tekens. Het nummer moet 11 tekens bevatten, momenteel zijn het er {count}.",
   "errorNumeroPortableManquant": "🚨 Er ontbreken tekens. Het nummer moet 12 tekens bevatten, momenteel zijn het er slechts {count}.",
-  "errorNumeroPortableTropLong": "🚨 Te veel tekens. Het nummer moet 12 tekens bevatten, momenteel zijn het er {count}."
+  "errorNumeroPortableTropLong": "🚨 Te veel tekens. Het nummer moet 12 tekens bevatten, momenteel zijn het er {count}.",
+  "errorNumeroCaracteresInvalides": "🚨 De tekenreeks mag alleen het '+'-symbool en cijfers bevatten."
 }

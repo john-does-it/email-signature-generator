@@ -2,12 +2,21 @@
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "bonjour": "Bonjour",
 
+  "title": "✍️ Générateur de signature d'email personnalisée",
+  "metadescription": "Générez gratuitement une signature d'email professionnelle et personnalisée en ligne.",
+
   "genererVotreSignature": "Générer votre signature d'email personnalisée",
   "vosDonnees": "Vos données",
   "generateurDeStyle": "Générateur de style",
+  "langageSelectionne": "Langue",
+  "infoChangementLangue": "Changer la langue permettra de mettre à jour les attributs <code>alt</code> et <code>title</code> dans le code HTML généré",
   "codeCouleur": "Code couleur",
-  "codeCouleurDeux": "Code couleur 2",
-  "taillePolice": "Taille de la police",
+  "codeCouleurDeux": "Code couleur secondaire",
+  "taille": "Taille",
+  "tailleSmall": "Petit",
+  "tailleNormal": "Normal",
+  "tailleLarge": "Grand",
+  "tailleXLarge": "Très grand",
   "vosInformations": "Vos informations",
   "nomSociete": "Nom de la société",
   "prenom": "Prénom",
@@ -51,5 +60,6 @@
   "errorNumeroFixeManquant": "🚨 Il manque des caractères. Il doit y en avoir 11 au total et il y en a actuellement seulement {count}.",
   "errorNumeroFixeTropLong": "🚨 Il y a des caractères en trop. Il doit y en avoir 11 au total et il y en a actuellement {count}.",
   "errorNumeroPortableManquant": "🚨 Il manque des caractères. Il doit y en avoir 12 au total et il y en a actuellement seulement {count}.",
-  "errorNumeroPortableTropLong": "🚨 Il y a des caractères en trop. Il doit y en avoir 12 au total et il y en a actuellement {count}."
+  "errorNumeroPortableTropLong": "🚨 Il y a des caractères en trop. Il doit y en avoir 12 au total et il y en a actuellement {count}.",
+  "errorNumeroCaracteresInvalides": "🚨 La chaine de caractère ne peut contenir que le symbole '+' et des nombres."
 }

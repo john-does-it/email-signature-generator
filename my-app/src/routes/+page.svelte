@@ -1,57 +1,50 @@
 <script lang="ts">
   import { onMount } from "svelte"
   import { m } from "$lib/paraglide/messages"
+  import { fade } from "svelte/transition"
+  import { getLocale, setLocale } from "$lib/paraglide/runtime"
   
-  /* root - +page.svelte */
-  let colorCode: any 
-  let colorCode2: any
-  let fontSize: number
-  let firstName: string
-  let lastName: string
-  let companyName: string
-  let role: string
-  let departmentName: string
-  let phoneNumber: string
-  let mobilePhoneNumber: string
-  let emailAddress: string
-  let websiteURL: string
-  let facebookPageURL: string
-  let linkedinPageURL: string
-  let instagramPageUrl: string
-  let youtubePageUrl: string
-  let tiktokPageUrl: string
-  let xPageUrl: string
+  let colorCode: string = '#000000'
+  let colorCode2: string = '#121212'
+  let fontSize: number = 14
+  let firstName: string = 'John'
+  let lastName: string = 'Doe'
+  let companyName: string = 'The Fictive Company'
+  let role: string = 'APM Manager'
+  let departmentName: string = 'Transformation & Digitalisation'
+  let phoneNumber: string = '+3242424242'
+  let mobilePhoneNumber: string = '+32420424242'
+  let emailAddress: string = 'hello@thefictivecompany.xyz'
+  let websiteURL: string = 'https://www.thefictivecompany.xyz'
+  let facebookPageURL: string = 'https://www.facebook.com/yourcompanyurl'
+  let linkedinPageURL: string = 'https://www.linkedin.com/yourcompanyurl'
+  let instagramPageUrl: string = 'https://www.instagram.com/yourcompanyurl'
+  let youtubePageUrl: string = 'https://www.youtube.com/yourcompanyurl'
+  let tiktokPageUrl: string = 'https://www.tiktok.com/yourcompanyurl'
+  let xPageUrl: string = 'https://www.x.com/yourcompanyurl'
+  let selectedLanguage: LanguageAvailable = 'fr'
+  let lineHeight: number = 1
+  let visible: boolean = false
+  
+  function updateLineHeight(fontSize: number) {
+    if (fontSize === 12) lineHeight = 1
+    if (fontSize === 14) lineHeight = 1.2
+    if (fontSize >= 16) lineHeight = 1.4
+  }
   
   onMount(() => {
-    colorCode = '#000000'
-    colorCode2 = '#121212'
-    firstName = 'John'
-    lastName = 'Doe'
-    companyName = 'The Fictive Company'
-    role = 'APM Manager'
-    departmentName = 'Transformation & Digitalisation'
-    phoneNumber = '+3242424242'
-    mobilePhoneNumber = '+32420424242'
-    emailAddress = 'hello@thefictivecompany.xyz'
-    websiteURL = 'https://www.thefictivecompany.xyz'
-    facebookPageURL = 'https://www.facebook.com/yourcompanyurl'
-    linkedinPageURL = 'https://www.linkedin.com/yourcompanyurl'
-    instagramPageUrl = 'https://www.instagram.com/yourcompanyurl'
-    youtubePageUrl = 'https://www.youtube.com/yourcompanyurl'
-    tiktokPageUrl = 'https://www.tiktok.com/yourcompanyurl'
-    xPageUrl = 'https://www.x.com/yourcompanyurl'
+    selectedLanguage = getLocale()
+    visible = true
   })
 </script>
 
 <svelte:head>
-<title>✍️ Générateur de signature d'email personnalisée</title>
-<meta name="description" content="Créer une signature d'email personnalisée en toute simplicité !">
+<title>{m.title()}</title>
+<meta name="description" content="{m.metadescription()}">
 </svelte:head>
 
-<wrapper>
-  <p>
-    {m.bonjour()}
-  </p>
+{#if visible}
+<wrapper transition:fade>
   <h1>
     {m.genererVotreSignature()}
   </h1>
@@ -61,6 +54,16 @@
         <h2>{m.vosDonnees()}</h2>
         <fieldset>
           <legend>{m.generateurDeStyle()}</legend>
+          <language-container>
+            <label for="selectedLanguage">{m.langageSelectionne()}</label>
+            <select name="selectedLanguage" bind:value={selectedLanguage} onchange={(event) => setLocale((event.target as HTMLSelectElement).value as LanguageAvailable)}>
+              <option disabled selected>{m.langageSelectionne()}</option>
+              <option value="fr">Français</option>
+              <option value="en">English</option>
+              <option value="nl">Nederlands</option>
+            </select>
+            <tip>{@html m.infoChangementLangue()}</tip>         
+          </language-container>
           <colors-code-container>
             <label for="colorCode">
               {m.codeCouleur()}
@@ -72,12 +75,12 @@
             </label>
           </colors-code-container>
           <label for="fontSize">
-            {m.taillePolice()}
-            <select bind:value={fontSize}>
-              <option value="12">12px</option>
-              <option value="14" selected>14px</option>
-              <option value="16">16px</option>
-              <option value="20">20px</option>
+            {m.taille()}
+            <select bind:value={fontSize} onchange={() => updateLineHeight(fontSize)}>
+              <option value={12}>{m.tailleSmall()}</option>
+              <option value={14}>{m.tailleNormal()}</option>
+              <option value={16}>{m.tailleLarge()}</option>
+              <option value={20}>{m.tailleXLarge()}</option>
             </select>
           </label>
         </fieldset>
@@ -122,6 +125,9 @@
             {#if phoneNumber.length > 11}
             <error>{m.errorNumeroFixeTropLong({ count: phoneNumber.length })}</error>
             {/if}
+            {#if /[^\d+]/.test(phoneNumber)}
+            <error>{m.errorNumeroCaracteresInvalides()}</error>
+            {/if}
           </errors-container>
           {/if}
           <label for="mobilePhoneNumber">
@@ -139,6 +145,9 @@
             {/if}
             {#if mobilePhoneNumber.length > 12}
             <error>{m.errorNumeroPortableTropLong({ count: mobilePhoneNumber.length })}</error>
+            {/if}
+            {#if /[^\d+]/.test(mobilePhoneNumber)}
+            <error>{m.errorNumeroCaracteresInvalides()}</error>
             {/if}
           </errors-container>
           {/if}        
@@ -183,10 +192,10 @@
     <table-and-title-container>
       <h2>{m.previsualisation()}</h2>
       <preview-container>
-        <table>
+        <table style="line-height: {lineHeight};">
           <thead>
             {#if firstName || lastName}
-            <tr style="line-height: .5;">
+            <tr>
               <td>
                 <span style="font-size: {(fontSize * 1.25).toFixed(0)}px; font-weight: bold; color: {colorCode};">
                   {#if firstName}
@@ -308,10 +317,11 @@
     </table-and-title-container>
   </signature-generator-container>
 </wrapper>
+{/if}
 
 <style>
   wrapper {
-    width: 1280px;
+    width: 1024px;
     max-width: 100%;
     display: flex;
     flex-flow: column;
@@ -319,26 +329,37 @@
     border-radius: 1em;
   }
   
+  h1 {
+    margin: left;
+  }
+  
+  language-container,
   colors-code-container {
     display: flex;
+    margin-bottom: .5em;
+  }
+  
+  colors-code-container {
     flex-wrap: wrap;
     column-gap: 1em;
-    margin-bottom: .5em;
+  }
+  
+  language-container {
+    flex-flow: column;
   }
   
   signature-generator-container {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     column-gap: 2em;
   }
   
   form-and-title-container {
     width: 100%;
     
-    @media(min-width: 780px) {
-      width: 50%;
+    @media(min-width: 1040px) {
+      max-width: 480px;
     }
   }
   
@@ -384,11 +405,20 @@
   errors-container {
     display: flex;
     flex-flow: column;
+  }
+  
+  errors-container error:last-child {
     margin-bottom: .5em;
   }
   
   tip {
+    display: block;
+    margin-bottom: .5em;
     font-style: italic;
+  }
+  
+  :global :has(tip ~ error-container) {
+    margin-bottom: 0;
   }
   
   tip, error {
