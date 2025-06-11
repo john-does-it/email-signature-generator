@@ -1,10 +1,8 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "bonjour": "Bonjour",
-
   "title": "✍️ Générateur de signature d'email personnalisée",
   "metadescription": "Générez gratuitement une signature d'email professionnelle et personnalisée en ligne.",
-
   "genererVotreSignature": "Générer votre signature d'email personnalisée",
   "vosDonnees": "Vos données",
   "generateurDeStyle": "Générateur de style",
@@ -36,7 +34,6 @@
   "urlTiktok": "Url de votre page TikTok",
   "urlX": "Url de votre page X",
   "previsualisation": "Prévisualisation",
-
   "altFacebook": "icône Facebook",
   "altInstagram": "icône Instagram",
   "altLinkedin": "icône LinkedIn",
@@ -53,7 +50,6 @@
   "titleCompanyWebsite": "Accéder au site web de {companyName}",
   "emailTo": "Envoyer un email à {firstName} {lastName} via {email}",
   "phoneCall": "Appeler {firstName} {lastName} au {number}",
-
   "tipNumeroFixe": "Format incluant le suffixe de votre pays, sans espace (exemple : +32424242)",
   "tipNumeroPortable": "Format incluant le suffixe de votre pays, sans espace (exemple : +32420424242)",
   "errorManquePlus": "🚨 Le symbole + est manquant",
@@ -61,5 +57,7 @@
   "errorNumeroFixeTropLong": "🚨 Il y a des caractères en trop. Il doit y en avoir 11 au total et il y en a actuellement {count}.",
   "errorNumeroPortableManquant": "🚨 Il manque des caractères. Il doit y en avoir 12 au total et il y en a actuellement seulement {count}.",
   "errorNumeroPortableTropLong": "🚨 Il y a des caractères en trop. Il doit y en avoir 12 au total et il y en a actuellement {count}.",
-  "errorNumeroCaracteresInvalides": "🚨 La chaine de caractère ne peut contenir que le symbole '+' et des nombres."
+  "errorNumeroCaracteresInvalides": "🚨 La chaine de caractère ne peut contenir que le symbole '+' et des nombres.",
+  "jsonConfigurationPlaceHolder": "Collez ici votre configuration JSON…",
+  "appliquer": "Appliquer"
 }

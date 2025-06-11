@@ -1,30 +1,75 @@
 <script lang="ts">
   import { onMount } from "svelte"
-  import { m } from "$lib/paraglide/messages"
   import { fade } from "svelte/transition"
+
+  import { jsonConfigurationPlaceHolder, m } from "$lib/paraglide/messages"
   import { getLocale, setLocale } from "$lib/paraglide/runtime"
   
-  let colorCode: string = '#000000'
-  let colorCode2: string = '#121212'
-  let fontSize: number = 14
-  let firstName: string = 'John'
-  let lastName: string = 'Doe'
-  let companyName: string = 'The Fictive Company'
-  let role: string = 'APM Manager'
-  let departmentName: string = 'Transformation & Digitalisation'
-  let phoneNumber: string = '+3242424242'
-  let mobilePhoneNumber: string = '+32420424242'
-  let emailAddress: string = 'hello@thefictivecompany.xyz'
-  let websiteURL: string = 'https://www.thefictivecompany.xyz'
-  let facebookPageURL: string = 'https://www.facebook.com/yourcompanyurl'
-  let linkedinPageURL: string = 'https://www.linkedin.com/yourcompanyurl'
-  let instagramPageUrl: string = 'https://www.instagram.com/yourcompanyurl'
-  let youtubePageUrl: string = 'https://www.youtube.com/yourcompanyurl'
-  let tiktokPageUrl: string = 'https://www.tiktok.com/yourcompanyurl'
-  let xPageUrl: string = 'https://www.x.com/yourcompanyurl'
-  let selectedLanguage: LanguageAvailable = 'fr'
-  let lineHeight: number = 1
-  let visible: boolean = false
+  let colorCode: string = $state('#000000')
+  let colorCode2: string = $state('#121212')
+  let fontSize: number = $state(14)
+  let firstName: string = $state('John')
+  let lastName: string = $state('Doe')
+  let companyName: string = $state('The Fictive Company')
+  let role: string = $state('APM Manager')
+  let departmentName: string = $state('Transformation & Digitalisation')
+  let phoneNumber: string = $state('+3242424242')
+  let mobilePhoneNumber: string = $state('+32420424242')
+  let emailAddress: string = $state('hello@thefictivecompany.xyz')
+  let websiteURL: string = $state('https://www.thefictivecompany.xyz')
+  let facebookPageURL: string = $state('https://www.facebook.com/yourcompanyurl')
+  let linkedinPageURL: string = $state('https://www.linkedin.com/yourcompanyurl')
+  let instagramPageUrl: string = $state('https://www.instagram.com/yourcompanyurl')
+  let youtubePageUrl: string = $state('https://www.youtube.com/yourcompanyurl')
+  let tiktokPageUrl: string = $state('https://www.tiktok.com/yourcompanyurl')
+  let xPageUrl: string = $state('https://www.x.com/yourcompanyurl')
+  let selectedLanguage: LanguageAvailable = $state('fr')
+  let lineHeight: number = $state(1.2)
+  let visible: boolean = $state(false)
+  
+  let configurationText: string = $state('')
+  
+  let exampleConfiguration = $derived(JSON.stringify({
+    companyName,
+    websiteURL,
+    facebookPageURL,
+    linkedinPageURL,
+    instagramPageUrl,
+    youtubePageUrl,
+    tiktokPageUrl,
+    xPageUrl,
+    colorCode,
+    colorCode2,
+    fontSize,
+    selectedLanguage
+  }, null, 2))
+  
+  function applyConfigurationFromText() {
+    try {
+      const config = JSON.parse(configurationText)
+      
+      if (config.companyName) companyName = config.companyName
+      if (config.websiteURL) websiteURL = config.websiteURL
+      if (config.facebookPageURL) facebookPageURL = config.facebookPageURL
+      if (config.linkedinPageURL) linkedinPageURL = config.linkedinPageURL
+      if (config.instagramPageUrl) instagramPageUrl = config.instagramPageUrl
+      if (config.youtubePageUrl) youtubePageUrl = config.youtubePageUrl
+      if (config.tiktokPageUrl) tiktokPageUrl = config.tiktokPageUrl
+      if (config.xPageUrl) xPageUrl = config.xPageUrl
+      if (config.colorCode) colorCode = config.colorCode
+      if (config.colorCode2) colorCode2 = config.colorCode2
+      if (config.fontSize) {
+        fontSize = config.fontSize
+        updateLineHeight(fontSize)
+      }
+      if (config.selectedLanguage) {
+        selectedLanguage = config.selectedLanguage
+        setLocale(config.selectedLanguage)
+      }
+    } catch (e) {
+      alert('❌ Configuration JSON invalide.')
+    }
+  }
   
   function updateLineHeight(fontSize: number) {
     if (fontSize === 12) lineHeight = 1
@@ -191,131 +236,167 @@
     </form-and-title-container>
     <table-and-title-container>
       <h2>{m.previsualisation()}</h2>
-      <preview-container>
-        <table style="line-height: {lineHeight};">
-          <thead>
-            {#if firstName || lastName}
-            <tr>
-              <td>
-                <span style="font-size: {(fontSize * 1.25).toFixed(0)}px; font-weight: bold; color: {colorCode};">
-                  {#if firstName}
-                  <span>{firstName}</span> 
+      <preview-and-configuration-container>
+        <preview-container>
+          <table style="line-height: {lineHeight};">
+            <thead>
+              {#if firstName || lastName}
+              <tr>
+                <td>
+                  <span style="font-size: {(fontSize * 1.25).toFixed(0)}px; font-weight: bold; color: {colorCode};">
+                    {#if firstName}
+                    <span>{firstName}</span> 
+                    {/if}
+                    {#if lastName}
+                    <span>{lastName}</span>
+                    {/if}
+                  </span>
+                </td>
+              </tr>
+              {/if}
+              {#if companyName}
+              <tr>
+                <td>
+                  <span style="font-size: {fontSize}px; text-transform: capitalize; font-weight: bold; color: {colorCode};">
+                    {companyName}
+                  </span>
+                </td>
+              </tr>
+              {:else}
+              <tr><td></td></tr>
+              {/if}
+              
+              {#if role || departmentName}
+              <tr style="line-height: .75;">
+                <td>
+                  {#if role}
+                  <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2};">
+                    {role}
+                  </span>
                   {/if}
-                  {#if lastName}
-                  <span>{lastName}</span>
+                  {#if role && departmentName}
+                  <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2};">
+                    -
+                  </span>
                   {/if}
-                </span>
-              </td>
-            </tr>
-            {/if}
-            {#if companyName}
-            <tr>
-              <td>
-                <span style="font-size: {fontSize}px; text-transform: capitalize; font-weight: bold; color: {colorCode};">
-                  {companyName}
-                </span>
-              </td>
-            </tr>
-            {:else}
-            <tr><td></td></tr>
-            {/if}
-            
-            {#if role || departmentName}
-            <tr style="line-height: .75;">
-              <td>
-                {#if role}
-                <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2};">
-                  {role}
-                </span>
-                {/if}
-                {#if role && departmentName}
-                <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2};">
-                  -
-                </span>
-                {/if}
-                {#if departmentName}
-                <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2};">
-                  {departmentName}
-                </span>
-                {/if}
-              </td>
-            </tr>
-            {/if}
-            
-            {#if phoneNumber || mobilePhoneNumber}
-            <tr>
-              <td>
-                {#if phoneNumber.length > 0}
-                <span style="font-size: {fontSize}px; color: {colorCode2};">
-                  <span style="font-weight: bold; color: {colorCode};">T</span>
-                  <a href="tel:{phoneNumber.trim().replace('+', '00')}" title={m.phoneCall({ firstName, lastName, number: phoneNumber })} style="color: {colorCode2};">{phoneNumber}</a>
-                </span>
-                {/if}
-                {#if mobilePhoneNumber.length > 0}
-                <span style="font-size: {fontSize}px; color: {colorCode2};">
-                  <span style="font-weight: bold; color: {colorCode};">M</span>
-                  <a href="tel:{mobilePhoneNumber.trim().replace('+32', '00')}" title={m.phoneCall({ firstName, lastName, number: mobilePhoneNumber })} style="color: {colorCode2};">{mobilePhoneNumber}</a>
-                </span>
-                {/if}
-              </td>
-            </tr>
-            {#if emailAddress}
-            <tr>
-              <td>
-                {#if emailAddress.length > 0}
-                <span style="font-size: {fontSize}px; {colorCode2}">
-                  <span style="font-weight: bold; color: {colorCode};">E</span>
-                  <a href="mailto:{emailAddress}" title={m.emailTo({ firstName, lastName, email: emailAddress })} style="color: {colorCode2};">{emailAddress}</a>
-                </span>
-                {/if}
-              </td>
-            </tr>
-            {/if}
-            {/if}
-            
-            {#if facebookPageURL || instagramPageUrl || linkedinPageURL || youtubePageUrl || tiktokPageUrl || xPageUrl}
-            <tr>
-              <td>
-                <span style="font-size: 24px;">
-                  {#if facebookPageURL}
-                  <a href={facebookPageURL} title={companyName ? `${m.titleFacebook()} de ${companyName}` : m.titleFacebook()}>
-                    <img src="https://img.icons8.com/?size=100&id=118497&format=png&color=000000" alt={m.altFacebook()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
-                  </a>
+                  {#if departmentName}
+                  <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2};">
+                    {departmentName}
+                  </span>
                   {/if}
-                  {#if instagramPageUrl}
-                  <a href={instagramPageUrl} title={companyName ? `${m.titleInstagram()} de ${companyName}` : m.titleInstagram()}>
-                    <img src="https://img.icons8.com/?size=100&id=32323&format=png&color=000000" alt={m.altInstagram()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
-                  </a>
+                </td>
+              </tr>
+              {/if}
+              
+              {#if phoneNumber || mobilePhoneNumber}
+              <tr>
+                <td>
+                  {#if phoneNumber.length > 0}
+                  <span style="font-size: {fontSize}px; color: {colorCode2};">
+                    <span style="font-weight: bold; color: {colorCode};">T</span>
+                    <a href="tel:{phoneNumber.trim().replace('+', '00')}" title={m.phoneCall({ firstName, lastName, number: phoneNumber })} style="color: {colorCode2};">{phoneNumber}</a>
+                  </span>
                   {/if}
-                  {#if linkedinPageURL}
-                  <a href={linkedinPageURL} title={companyName ? `${m.titleLinkedin()} de ${companyName}` : m.titleLinkedin()}>
-                    <img src="https://img.icons8.com/?size=100&id=13930&format=png&color=000000" alt={m.altLinkedin()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
-                  </a>
+                  {#if mobilePhoneNumber.length > 0}
+                  <span style="font-size: {fontSize}px; color: {colorCode2};">
+                    <span style="font-weight: bold; color: {colorCode};">M</span>
+                    <a href="tel:{mobilePhoneNumber.trim().replace('+32', '00')}" title={m.phoneCall({ firstName, lastName, number: mobilePhoneNumber })} style="color: {colorCode2};">{mobilePhoneNumber}</a>
+                  </span>
                   {/if}
-                  {#if youtubePageUrl}
-                  <a href={youtubePageUrl} title={companyName ? `${m.titleYoutube()} de ${companyName}` : m.titleYoutube()}>
-                    <img src="https://img.icons8.com/?size=100&id=19318&format=png&color=000000" alt={m.altYoutube()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
-                  </a>
+                </td>
+              </tr>
+              {#if emailAddress}
+              <tr>
+                <td>
+                  {#if emailAddress.length > 0}
+                  <span style="font-size: {fontSize}px; {colorCode2}">
+                    <span style="font-weight: bold; color: {colorCode};">E</span>
+                    <a href="mailto:{emailAddress}" title={m.emailTo({ firstName, lastName, email: emailAddress })} style="color: {colorCode2};">{emailAddress}</a>
+                  </span>
                   {/if}
-                  {#if tiktokPageUrl}
-                  <a href={tiktokPageUrl} title={companyName ? `${m.titleTiktok()} de ${companyName}` : m.titleTiktok()}>
-                    <img src="https://img.icons8.com/?size=100&id=118640&format=png&color=000000" alt={m.altTiktok()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
-                  </a>
-                  {/if}
-                  {#if xPageUrl}
-                  <a href={xPageUrl} title={companyName ? `${m.titleX()} de ${companyName}` : m.titleX()}>
-                    <img src="https://img.icons8.com/?size=100&id=ClbD5JTFM7FA&format=png&color=000000" alt={m.altX()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
-                  </a>
-                  {/if}
-                </span>
-              </td>
-            </tr>
-            {/if}
-          </thead>
-        </table>
-      </preview-container>
+                </td>
+              </tr>
+              {/if}
+              {/if}
+              
+              {#if facebookPageURL || instagramPageUrl || linkedinPageURL || youtubePageUrl || tiktokPageUrl || xPageUrl}
+              <tr>
+                <td>
+                  <span style="font-size: 24px;">
+                    {#if facebookPageURL}
+                    <a href={facebookPageURL} title={companyName ? `${m.titleFacebook()} de ${companyName}` : m.titleFacebook()}>
+                      <img src="https://img.icons8.com/?size=100&id=118497&format=png&color=000000" alt={m.altFacebook()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                    </a>
+                    {/if}
+                    {#if instagramPageUrl}
+                    <a href={instagramPageUrl} title={companyName ? `${m.titleInstagram()} de ${companyName}` : m.titleInstagram()}>
+                      <img src="https://img.icons8.com/?size=100&id=32323&format=png&color=000000" alt={m.altInstagram()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                    </a>
+                    {/if}
+                    {#if linkedinPageURL}
+                    <a href={linkedinPageURL} title={companyName ? `${m.titleLinkedin()} de ${companyName}` : m.titleLinkedin()}>
+                      <img src="https://img.icons8.com/?size=100&id=13930&format=png&color=000000" alt={m.altLinkedin()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                    </a>
+                    {/if}
+                    {#if youtubePageUrl}
+                    <a href={youtubePageUrl} title={companyName ? `${m.titleYoutube()} de ${companyName}` : m.titleYoutube()}>
+                      <img src="https://img.icons8.com/?size=100&id=19318&format=png&color=000000" alt={m.altYoutube()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                    </a>
+                    {/if}
+                    {#if tiktokPageUrl}
+                    <a href={tiktokPageUrl} title={companyName ? `${m.titleTiktok()} de ${companyName}` : m.titleTiktok()}>
+                      <img src="https://img.icons8.com/?size=100&id=118640&format=png&color=000000" alt={m.altTiktok()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                    </a>
+                    {/if}
+                    {#if xPageUrl}
+                    <a href={xPageUrl} title={companyName ? `${m.titleX()} de ${companyName}` : m.titleX()}>
+                      <img src="https://img.icons8.com/?size=100&id=ClbD5JTFM7FA&format=png&color=000000" alt={m.altX()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                    </a>
+                    {/if}
+                  </span>
+                </td>
+              </tr>
+              {/if}
+            </thead>
+          </table>
+        </preview-container>
+        <configuration-container>
+          <div>
+            {exampleConfiguration}
+          </div>
+          <textarea bind:value={configurationText} placeholder="{m.jsonConfigurationPlaceHolder()}" rows="14"></textarea>
+          <button onclick={applyConfigurationFromText}>{m.appliquer()}</button>
+        </configuration-container>
+      </preview-and-configuration-container>
     </table-and-title-container>
   </signature-generator-container>
+  <seo-content-container>
+    <h2>Pourquoi utiliser ce générateur de signature d'email ?</h2>
+    <h3>Simple et efficace</h3>
+    <p>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+      Blanditiis totam quisquam sapiente quo, eius harum! 
+      Inventore commodi unde vitae quo eveniet odit dignissimos nobis perspiciatis consequuntur enim. Odit, fuga est.
+    </p>
+    <h3>Open source</h3>
+    <p>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+      Blanditiis totam quisquam sapiente quo, eius harum! 
+      Inventore commodi unde vitae quo eveniet odit dignissimos nobis perspiciatis consequuntur enim. Odit, fuga est.
+    </p>
+    <h3>100% gratuit et sans publicité</h3>
+    <p>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+      Blanditiis totam quisquam sapiente quo, eius harum! 
+      Inventore commodi unde vitae quo eveniet odit dignissimos nobis perspiciatis consequuntur enim. Odit, fuga est.
+    </p>
+    <h2>Qui est le développeur de ce générateur de signature d'email ?</h2>
+    <p>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+      Blanditiis totam quisquam sapiente quo, eius harum! 
+      Inventore commodi unde vitae quo eveniet odit dignissimos nobis perspiciatis consequuntur enim. Odit, fuga est.
+    </p>
+  </seo-content-container>
 </wrapper>
 {/if}
 
@@ -425,16 +506,45 @@
     font-size: 12px;
   }
   
+  table-and-title-container {
+    width: 100%;
+
+    @media(min-width: 1024px) {
+      width: 480px;
+    }
+  }
+
   table {
     height: fit-content;
   }
   
-  preview-container {
-    width: 480px;
+  preview-and-configuration-container {
+    width: 100%;
     max-width: 100%;
+    display: flex;
+    flex-flow: column;
+    gap: 1em;
+    
+    @media(min-width: 1024px) {
+      width: 480px;
+    }
+  }
+  
+  preview-container {
     background-color: white;
     display: block;
     padding: 1em;
     border-radius: 12px;
+  }
+  
+  configuration-container {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    gap: 1em;
+  }
+  
+  textarea {
+    resize: vertical;
   }
 </style>

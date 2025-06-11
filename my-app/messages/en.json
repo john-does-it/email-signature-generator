@@ -1,10 +1,8 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "bonjour": "Hello",
-
   "title": "✍️ Custom Email Signature Generator",
   "metadescription": "Create a free custom professional email signature online in seconds.",
-
   "genererVotreSignature": "Generate your custom email signature",
   "vosDonnees": "Your data",
   "generateurDeStyle": "Style generator",
@@ -36,7 +34,6 @@
   "urlTiktok": "Your TikTok page URL",
   "urlX": "Your X page URL",
   "previsualisation": "Preview",
-
   "altFacebook": "Facebook icon",
   "altInstagram": "Instagram icon",
   "altLinkedin": "LinkedIn icon",
@@ -53,7 +50,6 @@
   "titleCompanyWebsite": "Visit the website of {companyName}",
   "emailTo": "Send an email to {firstName} {lastName} via {email}",
   "phoneCall": "Call {firstName} {lastName} at {number}",
-
   "tipNumeroFixe": "Format including your country prefix, no spaces (example: +32424242)",
   "tipNumeroPortable": "Format including your country prefix, no spaces (example: +32420424242)",
   "errorManquePlus": "🚨 The '+' symbol is missing",
@@ -61,5 +57,7 @@
   "errorNumeroFixeTropLong": "🚨 Too many characters. It must be exactly 11, but it's currently {count}.",
   "errorNumeroPortableManquant": "🚨 Missing characters. It must be exactly 12, but it's currently only {count}.",
   "errorNumeroPortableTropLong": "🚨 Too many characters. It must be exactly 12, but it's currently {count}.",
-  "errorNumeroCaracteresInvalides": "🚨 Only the '+' symbol and numbers are allowed."
+  "errorNumeroCaracteresInvalides": "🚨 Only the '+' symbol and numbers are allowed.",
+  "jsonConfigurationPlaceHolder": "Paste your JSON configuration here...",
+  "appliquer": "Apply"
 }
