@@ -17,6 +17,7 @@
   let mobilePhoneNumber: string = $state('+32420424242')
   let emailAddress: string = $state('hello@thefictivecompany.xyz')
   let websiteURL: string = $state('https://www.thefictivecompany.xyz')
+  let githubPageURL: string = $state('https://www.github.com/yourcompanyurl')
   let facebookPageURL: string = $state('https://www.facebook.com/yourcompanyurl')
   let linkedinPageURL: string = $state('https://www.linkedin.com/yourcompanyurl')
   let instagramPageUrl: string = $state('https://www.instagram.com/yourcompanyurl')
@@ -32,6 +33,7 @@
   let exampleConfiguration = $derived(JSON.stringify({
     companyName,
     websiteURL,
+    githubPageURL,
     facebookPageURL,
     linkedinPageURL,
     instagramPageUrl,
@@ -50,6 +52,7 @@
       
       if (config.companyName) companyName = config.companyName
       if (config.websiteURL) websiteURL = config.websiteURL
+      if (config.githubPageURL) githubPageURL = config.githubPageURL
       if (config.facebookPageURL) facebookPageURL = config.facebookPageURL
       if (config.linkedinPageURL) linkedinPageURL = config.linkedinPageURL
       if (config.instagramPageUrl) instagramPageUrl = config.instagramPageUrl
@@ -207,6 +210,10 @@
             {m.urlSiteWeb()}
             <input name="websiteURL" placeholder="https://www.thefictivecompany.xyz" type="text" bind:value={websiteURL}>
           </label>
+          <label for="githubPageURL">
+            {m.urlGithub()}
+            <input name="githubPageURL" placeholder="https://www.github.com/yourcompanyurl" type="text" bind:value={githubPageURL}>
+          </label>
           <label for="facebookPageURL">
             {m.urlFacebook()}
             <input name="facebookPageURL" placeholder="https://www.facebook.com/yourcompanyurl" type="text" bind:value={facebookPageURL}>
@@ -319,10 +326,15 @@
               {/if}
               {/if}
               
-              {#if facebookPageURL || instagramPageUrl || linkedinPageURL || youtubePageUrl || tiktokPageUrl || xPageUrl}
+              {#if githubPageURL || facebookPageURL || instagramPageUrl || linkedinPageURL || youtubePageUrl || tiktokPageUrl || xPageUrl}
               <tr>
                 <td>
                   <span style="font-size: 24px;">
+                    {#if githubPageURL}
+                    <a href={githubPageURL} title={companyName ? `${m.titleGithub()} de ${companyName}` : m.titleGithub()}>
+                      <img src="https://img.icons8.com/?size=100&id=12599&format=png&color=000000" alt={m.altGithub()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                    </a>
+                    {/if}
                     {#if facebookPageURL}
                     <a href={facebookPageURL} title={companyName ? `${m.titleFacebook()} de ${companyName}` : m.titleFacebook()}>
                       <img src="https://img.icons8.com/?size=100&id=118497&format=png&color=000000" alt={m.altFacebook()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
@@ -395,6 +407,10 @@
       Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
       Blanditiis totam quisquam sapiente quo, eius harum! 
       Inventore commodi unde vitae quo eveniet odit dignissimos nobis perspiciatis consequuntur enim. Odit, fuga est.
+    </p>
+    <h2>Credits</h2>
+    <p>
+      Icônes des réseaux sociaux : <a href="https://icons8.com" title="Accéder au site web de icons8.com">icons8.com</a>
     </p>
   </seo-content-container>
 </wrapper>
