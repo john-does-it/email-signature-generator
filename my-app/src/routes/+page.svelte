@@ -136,7 +136,7 @@
           <legend>{m.generateurDeStyle()}</legend>
           <language-container>
             <label for="selectedLanguage">{m.langageSelectionne()}</label>
-            <select name="selectedLanguage" bind:value={selectedLanguage} onchange={(event) => setLocale((event.target as HTMLSelectElement).value as LanguageAvailable)}>
+            <select name="selectedLanguage" id="selectedLanguage" bind:value={selectedLanguage} onchange={(event) => setLocale((event.target as HTMLSelectElement).value as LanguageAvailable)}>
               <option disabled selected>{m.langageSelectionne()}</option>
               <option value="fr">Français</option>
               <option value="en">English</option>
@@ -147,16 +147,16 @@
           <colors-code-container>
             <label for="colorCode">
               {m.codeCouleur()}
-              <input name="colorCode" type="color" bind:value={colorCode}>
+              <input name="colorCode" id="colorCode" type="color" bind:value={colorCode}>
             </label>
             <label for="colorCode2">
               {m.codeCouleurDeux()}
-              <input name="colorCode" type="color" bind:value={colorCode2}>
+              <input name="colorCode2" id="colorCode2" type="color" bind:value={colorCode2}>
             </label>
           </colors-code-container>
           <label for="fontSize">
             {m.taille()}
-            <select bind:value={fontSize} onchange={() => updateLineHeight(fontSize)}>
+            <select bind:value={fontSize} id="fontSize" onchange={() => updateLineHeight(fontSize)}>
               <option value={12}>{m.tailleSmall()}</option>
               <option value={14}>{m.tailleNormal()}</option>
               <option value={16}>{m.tailleLarge()}</option>
@@ -168,12 +168,12 @@
           <legend>{m.vosInformations()}</legend>
           <label for="picture">
             {m.photo()}
-            <input name="picture" placeholder="https://i0.wp.com/faildesk.net/wp-content/uploads/2012/11/funny-sexy-fail-bill-gates.jpg" type="text" bind:value={picture}>
+            <input name="picture" id="picture" placeholder="https://i0.wp.com/faildesk.net/wp-content/uploads/2012/11/funny-sexy-fail-bill-gates.jpg" type="text" bind:value={picture}>
           </label>
           {#if picture}
           <label for="pictureStyle">
             {m.stylePhoto()}
-            <select bind:value={pictureStyle}>
+            <select bind:value={pictureStyle} id="pictureStyle">
               <option value="square">{m.carree()}</option>
               <option value="round">{m.ronde()}</option>
             </select>
@@ -181,30 +181,30 @@
           {/if}
           <label for="companyName">
             {m.nomSociete()}
-            <input name="companyName" placeholder="The Fictive Company" type="text" bind:value={companyName}>
+            <input name="companyName" id="companyName" placeholder="The Fictive Company" type="text" bind:value={companyName}>
           </label>
           <label for="firstName">
             {m.prenom()}
-            <input name="firstName" placeholder="John" type="text" bind:value={firstName}>
+            <input name="firstName" id="firstName" placeholder="John" type="text" bind:value={firstName}>
           </label>
           <label for="lastName">
             {m.nomFamille()}
-            <input name="lastName" placeholder="Doe" type="text" bind:value={lastName}>
+            <input name="lastName" id="lastName" placeholder="Doe" type="text" bind:value={lastName}>
           </label>
           <label for="function">
             {m.fonction()}
-            <input name="function" placeholder="APM Manager" type="text" bind:value={role}>
+            <input name="function" id="function" placeholder="APM Manager" type="text" bind:value={role}>
           </label>
           <label for="departmentName">
             {m.departement()}
-            <input name="departmentName" placeholder="Transformation & Digitalisation" type="text" bind:value={departmentName}>
+            <input name="departmentName" id="departmentName" placeholder="Transformation & Digitalisation" type="text" bind:value={departmentName}>
           </label>
         </fieldset>
         <fieldset>
           <legend>{m.contact()}</legend>
           <label for="phoneNumber">
             {m.numeroFixe()}
-            <input name="phoneNumber" placeholder="+32420424242" type="text" bind:value={phoneNumber}>
+            <input name="phoneNumber" id="phoneNumber" placeholder="+32420424242" type="text" bind:value={phoneNumber}>
           </label>
           <tip>{m.tipNumeroFixe()}</tip>
           {#if phoneNumber}
@@ -225,7 +225,7 @@
           {/if}
           <label for="mobilePhoneNumber">
             {m.numeroPortable()}
-            <input name="mobilePhoneNumber" placeholder="+32420424242" type="text" bind:value={mobilePhoneNumber}>
+            <input name="mobilePhoneNumber" id="mobilePhoneNumber" placeholder="+32420424242" type="text" bind:value={mobilePhoneNumber}>
           </label>
           <tip>{m.tipNumeroPortable()}</tip>
           {#if mobilePhoneNumber}
@@ -246,42 +246,42 @@
           {/if}        
           <label for="emailAddress">
             {m.adresseEmail()}
-            <input name="emailAddress" placeholder="hello@thefictivecompany.xyz" type="text" bind:value={emailAddress}>
+            <input name="emailAddress" id="emailAddress" placeholder="hello@thefictivecompany.xyz" type="text" bind:value={emailAddress}>
           </label>
         </fieldset>
         <fieldset>
           <legend>{m.liens()}</legend>
           <label for="websiteURL">
             {m.urlSiteWeb()}
-            <input name="websiteURL" placeholder="https://www.thefictivecompany.xyz" type="text" bind:value={websiteURL}>
+            <input name="websiteURL" id="websiteURL" placeholder="https://www.thefictivecompany.xyz" type="text" bind:value={websiteURL}>
           </label>
           <label for="githubPageURL">
             {m.urlGithub()}
-            <input name="githubPageURL" placeholder="https://www.github.com/yourcompanyurl" type="text" bind:value={githubPageURL}>
+            <input name="githubPageURL" id="githubPageURL" placeholder="https://www.github.com/yourcompanyurl" type="text" bind:value={githubPageURL}>
           </label>
           <label for="facebookPageURL">
             {m.urlFacebook()}
-            <input name="facebookPageURL" placeholder="https://www.facebook.com/yourcompanyurl" type="text" bind:value={facebookPageURL}>
+            <input name="facebookPageURL" id="facebookPageURL" placeholder="https://www.facebook.com/yourcompanyurl" type="text" bind:value={facebookPageURL}>
           </label>
           <label for="instagramPageUrl">
             {m.urlInstagram()}
-            <input name="instagramPageUrl" placeholder="https://www.instagram.com/yourcompanyurl" type="text" bind:value={instagramPageUrl}>
+            <input name="instagramPageUrl" id="instagramPageUrl" placeholder="https://www.instagram.com/yourcompanyurl" type="text" bind:value={instagramPageUrl}>
           </label>
           <label for="linkedinPageURL">
             {m.urlLinkedin()}
-            <input name="linkedinPageURL" placeholder="https://www.linkedin.com/yourcompanyurl" type="text" bind:value={linkedinPageURL}>
+            <input name="linkedinPageURL" id="linkedinPageURL" placeholder="https://www.linkedin.com/yourcompanyurl" type="text" bind:value={linkedinPageURL}>
           </label>
           <label for="youtubePageUrl">
             {m.urlYoutube()}
-            <input name="youtubePageUrl" placeholder="https://www.youtube.com/yourcompanyurl" type="text" bind:value={youtubePageUrl}>
+            <input name="youtubePageUrl" id="youtubePageUrl" placeholder="https://www.youtube.com/yourcompanyurl" type="text" bind:value={youtubePageUrl}>
           </label>
           <label for="tiktopPageUrl">
             {m.urlTiktok()}
-            <input name="tiktopPageUrl" placeholder="https://www.tiktok.com/yourcompanyurl" type="text" bind:value={tiktokPageUrl}>
+            <input name="tiktopPageUrl" id="tiktopPageUrl" placeholder="https://www.tiktok.com/yourcompanyurl" type="text" bind:value={tiktokPageUrl}>
           </label>
           <label for="xPageUrl">
             {m.urlX()}
-            <input name="xPageUrl" placeholder="https://www.x.com/yourcompanyurl" type="text" bind:value={xPageUrl}>
+            <input name="xPageUrl" id="xPageUrl" placeholder="https://www.x.com/yourcompanyurl" type="text" bind:value={xPageUrl}>
           </label>
         </fieldset>
       </form>
@@ -433,7 +433,7 @@
       <example-configuration-container>
         {exampleConfiguration}
       </example-configuration-container>
-      <textarea bind:value={configurationText} placeholder="{m.jsonConfigurationPlaceHolder()}" rows="14"></textarea>
+      <textarea name="json-configurator" bind:value={configurationText} placeholder="{m.jsonConfigurationPlaceHolder()}" rows="14"></textarea>
       {#if configurationText.length === 0 || isJsonValid(configurationText) === false}
       <button disabled>{m.appliquer()}</button>
       {:else}
