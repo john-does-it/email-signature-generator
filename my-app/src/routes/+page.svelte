@@ -135,16 +135,6 @@
         <h2>{m.vosDonnees()}</h2>
         <fieldset>
           <legend>{m.generateurDeStyle()}</legend>
-          <font-container>
-            <label for="fontFamily">{m.police()}</label>
-            <select name="fontFamily" id="fontFamily" bind:value={fontFamily}>
-              <option disabled selected>System-ui</option>
-              <option value="System-ui">System-ui</option>
-              <option value="Serif">Serif</option>
-              <option value="Sans-Serif">Sans-serif</option>
-              <option value="Monospace">Monospace</option>
-            </select>
-          </font-container>
           <language-container>
             <label for="selectedLanguage">{m.langageSelectionne()}</label>
             <select name="selectedLanguage" id="selectedLanguage" bind:value={selectedLanguage} onchange={(event) => setLocale((event.target as HTMLSelectElement).value as LanguageAvailable)}>
@@ -155,6 +145,16 @@
             </select>
             <tip>{@html m.infoChangementLangue()}</tip>         
           </language-container>
+                    <font-container>
+            <label for="fontFamily">{m.police()}</label>
+            <select name="fontFamily" id="fontFamily" bind:value={fontFamily}>
+              <option disabled selected>System-ui</option>
+              <option value="System-ui">System-ui</option>
+              <option value="Serif">Serif</option>
+              <option value="Sans-Serif">Sans-serif</option>
+              <option value="Monospace">Monospace</option>
+            </select>
+          </font-container>
           <colors-code-container>
             <label for="colorCode">
               {m.codeCouleur()}
@@ -441,7 +441,7 @@
       </preview-container>
     </preview-and-title-container>
     <configuration-container>
-      <h2>JSON Configuration</h2>
+      <h2>{m.configurationJson()}</h2>
       <example-configuration-container>
         {exampleConfiguration}
       </example-configuration-container>
@@ -493,13 +493,13 @@
   }
   
   font-container,
-  language-container,
-  colors-code-container {
+  language-container{
     display: flex;
     flex-flow: column;
   }
   
   colors-code-container {
+    display: flex;
     flex-wrap: wrap;
     column-gap: 1em;
   }
