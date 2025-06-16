@@ -171,8 +171,8 @@
           <label for="pictureStyle">
             {m.stylePhoto()}
             <select bind:value={pictureStyle}>
-              <option value="square">{m.Carre()}</option>
-              <option value="round">{m.Rond()}</option>
+              <option value="square">{m.carree()}</option>
+              <option value="round">{m.ronde()}</option>
             </select>
           </label>
           {/if}
