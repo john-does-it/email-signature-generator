@@ -4,7 +4,7 @@
   
   import { m } from "$lib/paraglide/messages"
   import { getLocale, setLocale } from "$lib/paraglide/runtime"
-
+  
   let picture: string = $state('https://i0.wp.com/faildesk.net/wp-content/uploads/2012/11/funny-sexy-fail-bill-gates.jpg') 
   let pictureStyle: 'square' | 'round' = $state('square')
   let colorCode: string = $state('#000000')
@@ -32,7 +32,7 @@
   
   let heightOfPreviewContainer = $state()
   let seoContentContainer: HTMLDivElement | undefined = $state()
-
+  
   let configurationText: string = $state('')
   
   let exampleConfiguration = $derived(JSON.stringify({
@@ -56,18 +56,21 @@
     try {
       const config = JSON.parse(configurationText)
       
-      if (config.pictureStyle) pictureStyle = config.pictureStyle
-      if (config.companyName) companyName = config.companyName
-      if (config.websiteURL) websiteURL = config.websiteURL
-      if (config.githubPageURL) githubPageURL = config.githubPageURL
-      if (config.facebookPageURL) facebookPageURL = config.facebookPageURL
-      if (config.linkedinPageURL) linkedinPageURL = config.linkedinPageURL
-      if (config.instagramPageUrl) instagramPageUrl = config.instagramPageUrl
-      if (config.youtubePageUrl) youtubePageUrl = config.youtubePageUrl
-      if (config.tiktokPageUrl) tiktokPageUrl = config.tiktokPageUrl
-      if (config.xPageUrl) xPageUrl = config.xPageUrl
-      if (config.colorCode) colorCode = config.colorCode
-      if (config.colorCode2) colorCode2 = config.colorCode2
+      console.log(config.facebookPageURL)
+      
+      if ('pictureStyle' in config) pictureStyle = config.pictureStyle
+      if ('companyName' in config) companyName = config.companyName
+      if ('websiteURL' in config) websiteURL = config.websiteURL
+      if ('githubPageURL' in config) githubPageURL = config.githubPageURL
+      if ('facebookPageURL' in config) facebookPageURL = config.facebookPageURL
+      if ('linkedinPageURL' in config) linkedinPageURL = config.linkedinPageURL
+      if ('instagramPageUrl' in config) instagramPageUrl = config.instagramPageUrl
+      if ('youtubePageUrl' in config) youtubePageUrl = config.youtubePageUrl
+      if ('tiktokPageUrl' in config) tiktokPageUrl = config.tiktokPageUrl
+      if ('xPageUrl' in config) xPageUrl = config.xPageUrl
+      if ('colorCode' in config) colorCode = config.colorCode
+      if ('colorCode2' in config) colorCode2 = config.colorCode2
+      
       if (config.fontSize) {
         fontSize = config.fontSize
         updateLineHeight(fontSize)
@@ -96,7 +99,7 @@
     if (fontSize === 14) lineHeight = 1.2
     if (fontSize >= 16) lineHeight = 1.4
   }
-
+  
   function updatePaddingBottom() {
     if (seoContentContainer && window.innerWidth < 1024) {
       console.log('test')
