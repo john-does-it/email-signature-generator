@@ -103,7 +103,6 @@
   
   function updatePaddingBottom() {
     if (seoContentContainer && window.innerWidth < 1024) {
-      console.log('test')
       seoContentContainer.style.paddingBottom = `${heightOfPreviewContainer}px`
     } 
     if (seoContentContainer && window.innerWidth > 1024) {
