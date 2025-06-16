@@ -300,6 +300,7 @@
     <preview-and-title-container bind:clientHeight={heightOfPreviewContainer}>
       <h2>{m.previsualisation()}</h2>
       <preview-container>
+        <!-- TODO: add fallback fonts inside style attributes -->
         <table style="line-height: {lineHeight};">
           <thead>
             {#if picture}
