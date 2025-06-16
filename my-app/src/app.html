@@ -1,30 +1,100 @@
 <!doctype html>
 <html lang="%lang%">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
-	</body>
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+	%sveltekit.head%
+</head>
+<body data-sveltekit-preload-data="hover">
+	<div style="display: contents">%sveltekit.body%</div>
+</body>
 </html>
 
 <style>
+	:root {
+		--white: #F1EFE9;
+		--black: #0f222c;
+		--light-black: #1a3a4c;
+		--black-transparent: #0f222cf2;
+		--light-gray: #a4a6a7;
+		--tropical-teal: #0A9396;
+		--ocean-blue: #0077B6;
+		--light-blue: #cbecff;
+		--seafoam-green: #2A9D55;
+		--forest-green: #228B22;
+		--soft-sand: #E9D8A6;
+		--sand: #f3db94;
+		--sand-transparent: hsla(45, 80%, 77%, 0.15);
+		--dark-sand: #C4A484;
+		--yellow: #eec200;
+		--golden-amber: #EE9B00;
+		--burnt-orange: #CA6702;
+		--rusty-red: #BB3E03;
+		--brick-red: #AE2012;
+		--deep-crimson: #9B2226;
+	}
+	
 	body {
 		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-		background-color: #0f222c;
-		color: #f3db94;
+		background-color: var(--black);
+		color: var(--soft-sand);
+		padding: 2em;
+		
+		@media(min-width: 1024px) {
+			padding: 0;
+		}
 	}
-
+	
 	h1, 
 	h2, 
 	h3,
 	legend {
 		font-family: Kanit, serif;
+	}
+	
+	a {
+		color: var(--golden-amber);
+	}
+	
+	button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		max-width: 200px;
+		height: 40px;
+		color: var(--soft-sand);
+		padding: 0.25em 1em;
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+		font-size: 16px;
+		font-weight: bold;
+		text-align: center;
+		text-decoration: none;
+		white-space: nowrap;
+		border-radius: 0.25em;
+		border: 1px solid var(--sand);
+		background: linear-gradient(to right, transparent 0%, transparent 50%, var(--soft-sand) 50%, var(--soft-sand) 100%);
+		background-size: 400% 100%;
+		background-position: 0 0;
+		transition: background-position 0.5s ease-in-out, color 0.75s ease-in-out, letter-spacing .75s ease-in-out, font-weight .5s ease-in-out;
+		
+		&:hover:not(:disabled) {
+			color: var(--black);
+			background-position: 100% 0;
+			letter-spacing: 3px;
+			font-weight: 900;
+		}
+	}
+
+	button:disabled {
+		background: var(--light-gray);
+		color: var(--black-transparent);
+		border-color: var(--light-gray);
+		cursor: not-allowed;
+		transition: none;
 	}
 </style>

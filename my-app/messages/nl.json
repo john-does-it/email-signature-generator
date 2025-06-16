@@ -35,6 +35,10 @@
   "urlTiktok": "URL van je TikTokpagina",
   "urlX": "URL van je X-pagina",
   "previsualisation": "Voorbeeld",
+  "altGenericPhoto": "Profielfoto",
+  "altPhoto": "Foto van {firstName} {lastName}",
+  "carree": "Vierkant",
+  "round": "Rond",
   "altGithub": "Github-icoon",
   "altFacebook": "Facebook-icoon",
   "altInstagram": "Instagram-icoon",
@@ -62,5 +66,16 @@
   "errorNumeroPortableTropLong": "🚨 Te veel tekens. Het nummer moet 12 tekens bevatten, momenteel zijn het er {count}.",
   "errorNumeroCaracteresInvalides": "🚨 De tekenreeks mag alleen het '+'-symbool en cijfers bevatten.",
   "jsonConfigurationPlaceHolder": "Plak hier uw JSON-configuratie...",
-  "appliquer": "Toepassen"
+  "appliquer": "Toepassen",
+  "pourquoiUtiliser": "Waarom deze e-mailhandtekeninggenerator gebruiken?",
+  "simpleEfficace": "Eenvoudig en doeltreffend",
+  "paragrapheSimpleEfficace": "Met deze generator maak je in enkele klikken een professionele e-mailhandtekening. Geen account nodig, geen gedoe. De velden zijn aanpasbaar en de voorbeeldweergave is direct zichtbaar.",
+  "openSource": "Open source",
+  "paragrapheOpenSource": "Dit project is volledig open source. Je kunt de code bekijken, bijdragen aan verbeteringen of het aanpassen aan je eigen behoeften.",
+  "gratuitSansPub": "100% gratis en zonder advertenties",
+  "paragrapheGratuit": "Geen cookies, geen trackers, geen advertenties. Gewoon een hulpmiddel om je leven makkelijker te maken.",
+  "quiEstDev": "Wie heeft deze e-mailhandtekeninggenerator ontwikkeld?",
+  "paragrapheDev": "Dit project werd ontwikkeld door <a href=\"https://johndoesit.be\" title=\"Bezoek de website van John Does it\">John Does it</a>",
+  "credits": "Credits",
+  "creditIcons": "Socialmedia-iconen: <a href=\"https://icons8.com\" title=\"Bezoek icons8.com\">icons8.com</a>"
 }

@@ -1,10 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte"
   import { fade } from "svelte/transition"
-
-  import { jsonConfigurationPlaceHolder, m } from "$lib/paraglide/messages"
-  import { getLocale, setLocale } from "$lib/paraglide/runtime"
   
+  import { m } from "$lib/paraglide/messages"
+  import { getLocale, setLocale } from "$lib/paraglide/runtime"
+
+  let picture: string = $state('https://i0.wp.com/faildesk.net/wp-content/uploads/2012/11/funny-sexy-fail-bill-gates.jpg') 
+  let pictureStyle: 'square' | 'round' = $state('square')
   let colorCode: string = $state('#000000')
   let colorCode2: string = $state('#121212')
   let fontSize: number = $state(14)
@@ -28,9 +30,13 @@
   let lineHeight: number = $state(1.2)
   let visible: boolean = $state(false)
   
+  let heightOfPreviewContainer = $state()
+  let seoContentContainer: HTMLDivElement | undefined = $state()
+
   let configurationText: string = $state('')
   
   let exampleConfiguration = $derived(JSON.stringify({
+    pictureStyle,
     companyName,
     websiteURL,
     githubPageURL,
@@ -50,6 +56,7 @@
     try {
       const config = JSON.parse(configurationText)
       
+      if (config.pictureStyle) pictureStyle = config.pictureStyle
       if (config.companyName) companyName = config.companyName
       if (config.websiteURL) websiteURL = config.websiteURL
       if (config.githubPageURL) githubPageURL = config.githubPageURL
@@ -69,8 +76,18 @@
         selectedLanguage = config.selectedLanguage
         setLocale(config.selectedLanguage)
       }
-    } catch (e) {
-      alert('❌ Configuration JSON invalide.')
+    } catch (error) {
+      console.log('❌ Configuration JSON invalide.'+ error)
+      return false
+    }
+  }
+  
+  function isJsonValid(json: string): boolean {
+    try {
+      JSON.parse(json)
+      return true
+    } catch {
+      return false
     }
   }
   
@@ -79,12 +96,24 @@
     if (fontSize === 14) lineHeight = 1.2
     if (fontSize >= 16) lineHeight = 1.4
   }
+
+  function updatePaddingBottom() {
+    if (seoContentContainer && window.innerWidth < 1024) {
+      console.log('test')
+      seoContentContainer.style.paddingBottom = `${heightOfPreviewContainer}px`
+    } 
+    if (seoContentContainer && window.innerWidth > 1024) {
+      seoContentContainer.style.paddingBottom = '0px'
+    }
+  }
   
   onMount(() => {
     selectedLanguage = getLocale()
     visible = true
   })
 </script>
+
+<svelte:window on:resize={updatePaddingBottom} />
 
 <svelte:head>
 <title>{m.title()}</title>
@@ -134,6 +163,19 @@
         </fieldset>
         <fieldset>
           <legend>{m.vosInformations()}</legend>
+          <label for="picture">
+            {m.photo()}
+            <input name="picture" placeholder="https://i0.wp.com/faildesk.net/wp-content/uploads/2012/11/funny-sexy-fail-bill-gates.jpg" type="text" bind:value={picture}>
+          </label>
+          {#if picture}
+          <label for="pictureStyle">
+            {m.stylePhoto()}
+            <select bind:value={pictureStyle}>
+              <option value="square">{m.Carre()}</option>
+              <option value="round">{m.Rond()}</option>
+            </select>
+          </label>
+          {/if}
           <label for="companyName">
             {m.nomSociete()}
             <input name="companyName" placeholder="The Fictive Company" type="text" bind:value={companyName}>
@@ -165,16 +207,16 @@
           {#if phoneNumber}
           <errors-container>
             {#if !phoneNumber.includes('+')}
-            <error>{m.errorManquePlus()}</error>
+            <error-container>{m.errorManquePlus()}</error-container>
             {/if}
             {#if phoneNumber.length < 11}
-            <error>{m.errorNumeroFixeManquant({ count: phoneNumber.length })}</error>
+            <error-container>{m.errorNumeroFixeManquant({ count: phoneNumber.length })}</error-container>
             {/if}
             {#if phoneNumber.length > 11}
-            <error>{m.errorNumeroFixeTropLong({ count: phoneNumber.length })}</error>
+            <error-container>{m.errorNumeroFixeTropLong({ count: phoneNumber.length })}</error-container>
             {/if}
             {#if /[^\d+]/.test(phoneNumber)}
-            <error>{m.errorNumeroCaracteresInvalides()}</error>
+            <error-container>{m.errorNumeroCaracteresInvalides()}</error-container>
             {/if}
           </errors-container>
           {/if}
@@ -186,16 +228,16 @@
           {#if mobilePhoneNumber}
           <errors-container>
             {#if !mobilePhoneNumber.includes('+')}
-            <error>{m.errorManquePlus()}</error>
+            <error-container>{m.errorManquePlus()}</error-container>
             {/if}
             {#if mobilePhoneNumber.length < 12}
-            <error>{m.errorNumeroPortableManquant({ count: mobilePhoneNumber.length })}</error>
+            <error-container>{m.errorNumeroPortableManquant({ count: mobilePhoneNumber.length })}</error-container>
             {/if}
             {#if mobilePhoneNumber.length > 12}
-            <error>{m.errorNumeroPortableTropLong({ count: mobilePhoneNumber.length })}</error>
+            <error-container>{m.errorNumeroPortableTropLong({ count: mobilePhoneNumber.length })}</error-container>
             {/if}
             {#if /[^\d+]/.test(mobilePhoneNumber)}
-            <error>{m.errorNumeroCaracteresInvalides()}</error>
+            <error-container>{m.errorNumeroCaracteresInvalides()}</error-container>
             {/if}
           </errors-container>
           {/if}        
@@ -241,178 +283,173 @@
         </fieldset>
       </form>
     </form-and-title-container>
-    <table-and-title-container>
+    <preview-and-title-container bind:clientHeight={heightOfPreviewContainer}>
       <h2>{m.previsualisation()}</h2>
-      <preview-and-configuration-container>
-        <preview-container>
-          <table style="line-height: {lineHeight};">
-            <thead>
-              {#if firstName || lastName}
-              <tr>
-                <td>
-                  <span style="font-size: {(fontSize * 1.25).toFixed(0)}px; font-weight: bold; color: {colorCode};">
-                    {#if firstName}
-                    <span>{firstName}</span> 
-                    {/if}
-                    {#if lastName}
-                    <span>{lastName}</span>
-                    {/if}
-                  </span>
-                </td>
-              </tr>
-              {/if}
-              {#if companyName}
-              <tr>
-                <td>
-                  <span style="font-size: {fontSize}px; text-transform: capitalize; font-weight: bold; color: {colorCode};">
-                    {companyName}
-                  </span>
-                </td>
-              </tr>
-              {:else}
-              <tr><td></td></tr>
-              {/if}
-              
-              {#if role || departmentName}
-              <tr style="line-height: .75;">
-                <td>
-                  {#if role}
-                  <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2};">
-                    {role}
-                  </span>
+      <preview-container>
+        <table style="line-height: {lineHeight};">
+          <thead>
+            {#if picture}
+            <tr>
+              <td>
+                <img src={picture} alt={m.altPhoto({firstName, lastName})} width=100 style="border-radius: { pictureStyle === "round" ? 100 : 0}%;">
+              </td>
+            </tr>
+            {/if}
+            {#if firstName || lastName}
+            <tr>
+              <td>
+                <span style="font-size: {(fontSize * 1.25).toFixed(0)}px; font-weight: bold; color: {colorCode};">
+                  {#if firstName}
+                  <span>{firstName}</span> 
                   {/if}
-                  {#if role && departmentName}
-                  <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2};">
-                    -
-                  </span>
+                  {#if lastName}
+                  <span>{lastName}</span>
                   {/if}
-                  {#if departmentName}
-                  <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2};">
-                    {departmentName}
-                  </span>
+                </span>
+              </td>
+            </tr>
+            {/if}
+            {#if companyName}
+            <tr>
+              <td>
+                <span style="font-size: {fontSize}px; text-transform: capitalize; font-weight: bold; color: {colorCode};">
+                  {companyName}
+                </span>
+              </td>
+            </tr>
+            {:else}
+            <tr><td></td></tr>
+            {/if}
+            
+            {#if role || departmentName}
+            <tr style="line-height: .75;">
+              <td>
+                {#if role}
+                <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2};">
+                  {role}
+                </span>
+                {/if}
+                {#if role && departmentName}
+                <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2};">
+                  -
+                </span>
+                {/if}
+                {#if departmentName}
+                <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2};">
+                  {departmentName}
+                </span>
+                {/if}
+              </td>
+            </tr>
+            {/if}
+            
+            {#if phoneNumber || mobilePhoneNumber}
+            <tr>
+              <td>
+                {#if phoneNumber.length > 0}
+                <span style="font-size: {fontSize}px; color: {colorCode2};">
+                  <span style="font-weight: bold; color: {colorCode};">T</span>
+                  <a href="tel:{phoneNumber.trim().replace('+', '00')}" title={m.phoneCall({ firstName, lastName, number: phoneNumber })} style="color: {colorCode2};">{phoneNumber}</a>
+                </span>
+                {/if}
+                {#if mobilePhoneNumber.length > 0}
+                <span style="font-size: {fontSize}px; color: {colorCode2};">
+                  <span style="font-weight: bold; color: {colorCode};">M</span>
+                  <a href="tel:{mobilePhoneNumber.trim().replace('+', '00')}" title={m.phoneCall({ firstName, lastName, number: mobilePhoneNumber })} style="color: {colorCode2};">{mobilePhoneNumber}</a>
+                </span>
+                {/if}
+              </td>
+            </tr>
+            {#if emailAddress}
+            <tr>
+              <td>
+                {#if emailAddress.length > 0}
+                <span style="font-size: {fontSize}px; {colorCode2}">
+                  <span style="font-weight: bold; color: {colorCode};">E</span>
+                  <a href="mailto:{emailAddress}" title={m.emailTo({ firstName, lastName, email: emailAddress })} style="color: {colorCode2};">{emailAddress}</a>
+                </span>
+                {/if}
+              </td>
+            </tr>
+            {/if}
+            {/if}
+            {#if githubPageURL || facebookPageURL || instagramPageUrl || linkedinPageURL || youtubePageUrl || tiktokPageUrl || xPageUrl}
+            <tr>
+              <td>
+                <span style="font-size: 24px;">
+                  {#if githubPageURL}
+                  <a href={githubPageURL} title={companyName ? `${m.titleGithub()} ${companyName}` : m.titleGithub()}>
+                    <img src="https://img.icons8.com/?size=100&id=12599&format=png&color=000000" alt={m.altGithub()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                  </a>
                   {/if}
-                </td>
-              </tr>
-              {/if}
-              
-              {#if phoneNumber || mobilePhoneNumber}
-              <tr>
-                <td>
-                  {#if phoneNumber.length > 0}
-                  <span style="font-size: {fontSize}px; color: {colorCode2};">
-                    <span style="font-weight: bold; color: {colorCode};">T</span>
-                    <a href="tel:{phoneNumber.trim().replace('+', '00')}" title={m.phoneCall({ firstName, lastName, number: phoneNumber })} style="color: {colorCode2};">{phoneNumber}</a>
-                  </span>
+                  {#if facebookPageURL}
+                  <a href={facebookPageURL} title={companyName ? `${m.titleFacebook()} ${companyName}` : m.titleFacebook()}>
+                    <img src="https://img.icons8.com/?size=100&id=118497&format=png&color=000000" alt={m.altFacebook()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                  </a>
                   {/if}
-                  {#if mobilePhoneNumber.length > 0}
-                  <span style="font-size: {fontSize}px; color: {colorCode2};">
-                    <span style="font-weight: bold; color: {colorCode};">M</span>
-                    <a href="tel:{mobilePhoneNumber.trim().replace('+32', '00')}" title={m.phoneCall({ firstName, lastName, number: mobilePhoneNumber })} style="color: {colorCode2};">{mobilePhoneNumber}</a>
-                  </span>
+                  {#if instagramPageUrl}
+                  <a href={instagramPageUrl} title={companyName ? `${m.titleInstagram()} ${companyName}` : m.titleInstagram()}>
+                    <img src="https://img.icons8.com/?size=100&id=32323&format=png&color=000000" alt={m.altInstagram()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                  </a>
                   {/if}
-                </td>
-              </tr>
-              {#if emailAddress}
-              <tr>
-                <td>
-                  {#if emailAddress.length > 0}
-                  <span style="font-size: {fontSize}px; {colorCode2}">
-                    <span style="font-weight: bold; color: {colorCode};">E</span>
-                    <a href="mailto:{emailAddress}" title={m.emailTo({ firstName, lastName, email: emailAddress })} style="color: {colorCode2};">{emailAddress}</a>
-                  </span>
+                  {#if linkedinPageURL}
+                  <a href={linkedinPageURL} title={companyName ? `${m.titleLinkedin()} ${companyName}` : m.titleLinkedin()}>
+                    <img src="https://img.icons8.com/?size=100&id=13930&format=png&color=000000" alt={m.altLinkedin()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                  </a>
                   {/if}
-                </td>
-              </tr>
-              {/if}
-              {/if}
-              
-              {#if githubPageURL || facebookPageURL || instagramPageUrl || linkedinPageURL || youtubePageUrl || tiktokPageUrl || xPageUrl}
-              <tr>
-                <td>
-                  <span style="font-size: 24px;">
-                    {#if githubPageURL}
-                    <a href={githubPageURL} title={companyName ? `${m.titleGithub()} de ${companyName}` : m.titleGithub()}>
-                      <img src="https://img.icons8.com/?size=100&id=12599&format=png&color=000000" alt={m.altGithub()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
-                    </a>
-                    {/if}
-                    {#if facebookPageURL}
-                    <a href={facebookPageURL} title={companyName ? `${m.titleFacebook()} de ${companyName}` : m.titleFacebook()}>
-                      <img src="https://img.icons8.com/?size=100&id=118497&format=png&color=000000" alt={m.altFacebook()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
-                    </a>
-                    {/if}
-                    {#if instagramPageUrl}
-                    <a href={instagramPageUrl} title={companyName ? `${m.titleInstagram()} de ${companyName}` : m.titleInstagram()}>
-                      <img src="https://img.icons8.com/?size=100&id=32323&format=png&color=000000" alt={m.altInstagram()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
-                    </a>
-                    {/if}
-                    {#if linkedinPageURL}
-                    <a href={linkedinPageURL} title={companyName ? `${m.titleLinkedin()} de ${companyName}` : m.titleLinkedin()}>
-                      <img src="https://img.icons8.com/?size=100&id=13930&format=png&color=000000" alt={m.altLinkedin()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
-                    </a>
-                    {/if}
-                    {#if youtubePageUrl}
-                    <a href={youtubePageUrl} title={companyName ? `${m.titleYoutube()} de ${companyName}` : m.titleYoutube()}>
-                      <img src="https://img.icons8.com/?size=100&id=19318&format=png&color=000000" alt={m.altYoutube()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
-                    </a>
-                    {/if}
-                    {#if tiktokPageUrl}
-                    <a href={tiktokPageUrl} title={companyName ? `${m.titleTiktok()} de ${companyName}` : m.titleTiktok()}>
-                      <img src="https://img.icons8.com/?size=100&id=118640&format=png&color=000000" alt={m.altTiktok()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
-                    </a>
-                    {/if}
-                    {#if xPageUrl}
-                    <a href={xPageUrl} title={companyName ? `${m.titleX()} de ${companyName}` : m.titleX()}>
-                      <img src="https://img.icons8.com/?size=100&id=ClbD5JTFM7FA&format=png&color=000000" alt={m.altX()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
-                    </a>
-                    {/if}
-                  </span>
-                </td>
-              </tr>
-              {/if}
-            </thead>
-          </table>
-        </preview-container>
-        <configuration-container>
-          <div>
-            {exampleConfiguration}
-          </div>
-          <textarea bind:value={configurationText} placeholder="{m.jsonConfigurationPlaceHolder()}" rows="14"></textarea>
-          <button onclick={applyConfigurationFromText}>{m.appliquer()}</button>
-        </configuration-container>
-      </preview-and-configuration-container>
-    </table-and-title-container>
+                  {#if youtubePageUrl}
+                  <a href={youtubePageUrl} title={companyName ? `${m.titleYoutube()} ${companyName}` : m.titleYoutube()}>
+                    <img src="https://img.icons8.com/?size=100&id=19318&format=png&color=000000" alt={m.altYoutube()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                  </a>
+                  {/if}
+                  {#if tiktokPageUrl}
+                  <a href={tiktokPageUrl} title={companyName ? `${m.titleTiktok()} ${companyName}` : m.titleTiktok()}>
+                    <img src="https://img.icons8.com/?size=100&id=118640&format=png&color=000000" alt={m.altTiktok()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                  </a>
+                  {/if}
+                  {#if xPageUrl}
+                  <a href={xPageUrl} title={companyName ? `${m.titleX()} ${companyName}` : m.titleX()}>
+                    <img src="https://img.icons8.com/?size=100&id=ClbD5JTFM7FA&format=png&color=000000" alt={m.altX()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                  </a>
+                  {/if}
+                </span>
+              </td>
+            </tr>
+            {/if}
+          </thead>
+        </table>
+      </preview-container>
+    </preview-and-title-container>
+    <configuration-container>
+      <h2>JSON Configuration</h2>
+      <example-configuration-container>
+        {exampleConfiguration}
+      </example-configuration-container>
+      <textarea bind:value={configurationText} placeholder="{m.jsonConfigurationPlaceHolder()}" rows="14"></textarea>
+      {#if configurationText.length === 0 || isJsonValid(configurationText) === false}
+      <button disabled>{m.appliquer()}</button>
+      {:else}
+      <button onclick={applyConfigurationFromText}>{m.appliquer()}</button>
+      {/if}
+    </configuration-container>
   </signature-generator-container>
-  <seo-content-container>
-    <h2>Pourquoi utiliser ce générateur de signature d'email ?</h2>
-    <h3>Simple et efficace</h3>
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-      Blanditiis totam quisquam sapiente quo, eius harum! 
-      Inventore commodi unde vitae quo eveniet odit dignissimos nobis perspiciatis consequuntur enim. Odit, fuga est.
-    </p>
-    <h3>Open source</h3>
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-      Blanditiis totam quisquam sapiente quo, eius harum! 
-      Inventore commodi unde vitae quo eveniet odit dignissimos nobis perspiciatis consequuntur enim. Odit, fuga est.
-    </p>
-    <h3>100% gratuit et sans publicité</h3>
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-      Blanditiis totam quisquam sapiente quo, eius harum! 
-      Inventore commodi unde vitae quo eveniet odit dignissimos nobis perspiciatis consequuntur enim. Odit, fuga est.
-    </p>
-    <h2>Qui est le développeur de ce générateur de signature d'email ?</h2>
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-      Blanditiis totam quisquam sapiente quo, eius harum! 
-      Inventore commodi unde vitae quo eveniet odit dignissimos nobis perspiciatis consequuntur enim. Odit, fuga est.
-    </p>
-    <h2>Credits</h2>
-    <p>
-      Icônes des réseaux sociaux : <a href="https://icons8.com" title="Accéder au site web de icons8.com">icons8.com</a>
-    </p>
-  </seo-content-container>
+  <seo-content-container bind:this={seoContentContainer as HTMLDivElement} style={window.innerWidth < 1024 ? `padding-bottom: ${heightOfPreviewContainer}px;` : ''}> 
+    <h2>{m.pourquoiUtiliser()}</h2>
+    <h3>{m.simpleEfficace()}</h3>
+    <p>{m.paragrapheSimpleEfficace()}</p>
+    
+    <h3>{m.openSource()}</h3>
+    <p>{m.paragrapheOpenSource()}</p>
+    
+    <h3>{m.gratuitSansPub()}</h3>
+    <p>{m.paragrapheGratuit()}</p>
+    
+    <h2>{m.quiEstDev()}</h2>
+    <p>{@html m.paragrapheDev()}</p>
+    
+    <h2>{m.credits()}</h2>
+    <p>{@html m.creditIcons()}</p>
+  </seo-content-container>  
 </wrapper>
 {/if}
 
@@ -433,12 +470,12 @@
   language-container,
   colors-code-container {
     display: flex;
-    margin-bottom: .5em;
   }
   
   colors-code-container {
     flex-wrap: wrap;
     column-gap: 1em;
+    margin-bottom: .5em;
   }
   
   language-container {
@@ -463,9 +500,6 @@
   form-and-title-container h2 {
     margin: 0 0 .5em 0;
   }
-  table-and-title-container h2 {
-    margin: 0 0 1em 0;
-  }
   
   form, 
   label {
@@ -487,7 +521,7 @@
   fieldset {
     margin-top: -.25em;
     padding-bottom: 1em;
-    border: 1px solid white;
+    border: 1px solid var(--soft-sand);
     border-radius: 4px;
   }
   
@@ -504,7 +538,7 @@
     flex-flow: column;
   }
   
-  errors-container error:last-child {
+  errors-container error-container:last-child {
     margin-bottom: .5em;
   }
   
@@ -518,36 +552,40 @@
     margin-bottom: 0;
   }
   
-  tip, error {
+  tip, error-container {
     font-size: 12px;
   }
   
-  table-and-title-container {
+  preview-and-title-container {
     width: 100%;
-
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: var(--black);
+    border-top: 1px solid var(--soft-sand);
+    
     @media(min-width: 1024px) {
       width: 480px;
+      position: relative;
+      border-top: none;
+    }
+    
+    h2 {
+      margin-left: 1em;
+      
+      @media(min-width: 1024px) {
+        margin-left: 0;
+        margin-top: 0;
+      }
     }
   }
-
+  
   table {
     height: fit-content;
   }
   
-  preview-and-configuration-container {
-    width: 100%;
-    max-width: 100%;
-    display: flex;
-    flex-flow: column;
-    gap: 1em;
-    
-    @media(min-width: 1024px) {
-      width: 480px;
-    }
-  }
-  
   preview-container {
-    background-color: white;
+    background-color: var(--white);
     display: block;
     padding: 1em;
     border-radius: 12px;
@@ -558,6 +596,15 @@
     display: flex;
     flex-flow: column;
     gap: 1em;
+    
+    h2 {
+      margin-top: 2em;
+      margin-bottom: 0;
+    }
+    
+    button {
+      align-self: flex-end;
+    }
   }
   
   textarea {

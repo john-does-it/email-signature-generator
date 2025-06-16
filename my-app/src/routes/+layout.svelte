@@ -1,7 +1,13 @@
 <script>
 	import { page } from '$app/state'
 	import { locales, localizeHref } from '$lib/paraglide/runtime'
+
+	function recalculatePaddingBottomAppliedToSEOContainer() {
+		console.log('Window resized')
+	}
 </script>
+
+<svelte:window on:resize={recalculatePaddingBottomAppliedToSEOContainer}/>
 
 <slot></slot>
 
