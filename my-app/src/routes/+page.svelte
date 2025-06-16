@@ -70,7 +70,7 @@
       if ('xPageUrl' in config) xPageUrl = config.xPageUrl
       if ('colorCode' in config) colorCode = config.colorCode
       if ('colorCode2' in config) colorCode2 = config.colorCode2
-      
+
       if (config.fontSize) {
         fontSize = config.fontSize
         updateLineHeight(fontSize)
@@ -376,10 +376,15 @@
             </tr>
             {/if}
             {/if}
-            {#if githubPageURL || facebookPageURL || instagramPageUrl || linkedinPageURL || youtubePageUrl || tiktokPageUrl || xPageUrl}
+            {#if websiteURL ||githubPageURL || facebookPageURL || instagramPageUrl || linkedinPageURL || youtubePageUrl || tiktokPageUrl || xPageUrl}
             <tr>
               <td>
                 <span style="font-size: 24px;">
+                  {#if websiteURL}
+                  <a href={websiteURL} title={companyName ? `${m.titleCompanyWebsite({companyName})}` : m.titleGenericWebsite()}>
+                    <img src="https://img.icons8.com/?size=100&id=1349&format=png&color=000000" alt={m.altWebsite()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
+                  </a>
+                  {/if}
                   {#if githubPageURL}
                   <a href={githubPageURL} title={companyName ? `${m.titleGithub()} ${companyName}` : m.titleGithub()}>
                     <img src="https://img.icons8.com/?size=100&id=12599&format=png&color=000000" alt={m.altGithub()} width={fontSize * 2} height={fontSize * 2} style="vertical-align: middle;">
