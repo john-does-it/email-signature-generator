@@ -6,6 +6,7 @@
   "genererVotreSignature": "Genereer je gepersonaliseerde e-mailsignatuur",
   "vosDonnees": "Je gegevens",
   "generateurDeStyle": "Stijlgenerator",
+  "police": "Lettertype",
   "langageSelectionne": "Taal",
   "infoChangementLangue": "De taal wijzigen werkt de attributen <code>alt</code> en <code>title</code> bij in de gegenereerde HTML-code",
   "codeCouleur": "Kleurcode",

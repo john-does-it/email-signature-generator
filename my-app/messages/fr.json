@@ -6,6 +6,7 @@
   "genererVotreSignature": "Générer votre signature d'email personnalisée",
   "vosDonnees": "Vos données",
   "generateurDeStyle": "Générateur de style",
+  "police": "Police",
   "langageSelectionne": "Langue",
   "infoChangementLangue": "Changer la langue permettra de mettre à jour les attributs <code>alt</code> et <code>title</code> dans le code HTML généré",
   "codeCouleur": "Code couleur",
