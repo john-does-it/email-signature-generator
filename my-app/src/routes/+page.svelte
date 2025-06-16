@@ -5,7 +5,7 @@
   import { m } from "$lib/paraglide/messages"
   import { getLocale, setLocale } from "$lib/paraglide/runtime"
   
-  let fontFamily: string = $state('Serif')
+  let fontFamily: string = $state('System-ui')
   let picture: string = $state('https://i0.wp.com/faildesk.net/wp-content/uploads/2012/11/funny-sexy-fail-bill-gates.jpg') 
   let pictureStyle: 'square' | 'round' = $state('square')
   let colorCode: string = $state('#000000')
@@ -138,11 +138,11 @@
           <font-container>
             <label for="fontFamily">{m.police()}</label>
             <select name="fontFamily" id="fontFamily" bind:value={fontFamily}>
-              <option disabled selected>Serif</option>
+              <option disabled selected>System-ui</option>
+              <option value="System-ui">System-ui</option>
               <option value="Serif">Serif</option>
               <option value="Sans-Serif">Sans-serif</option>
               <option value="Monospace">Monospace</option>
-              <option value="System-ui">System-ui</option>
             </select>
           </font-container>
           <language-container>
@@ -313,7 +313,7 @@
             {#if firstName || lastName}
             <tr>
               <td>
-                <span style="font-size: {(fontSize * 1.25).toFixed(0)}px; font-weight: bold; color: {colorCode}; font-family: {fontFamily};">
+                <span style="font-size: {(fontSize * 1.25).toFixed(0)}px; font-weight: bold; color: {colorCode}; font-family: {fontFamily}, System-ui, Sans-serif, Arial, Serif;;">
                   {#if firstName}
                   <span>{firstName}</span> 
                   {/if}
@@ -327,7 +327,7 @@
             {#if companyName}
             <tr>
               <td>
-                <span style="font-size: {fontSize}px; text-transform: capitalize; font-weight: bold; color: {colorCode}; font-family: {fontFamily};">
+                <span style="font-size: {fontSize}px; text-transform: capitalize; font-weight: bold; color: {colorCode}; font-family: {fontFamily}, System-ui, Sans-serif, Arial, Serif;;">
                   {companyName}
                 </span>
               </td>
@@ -340,17 +340,17 @@
             <tr style="line-height: .75;">
               <td>
                 {#if role}
-                <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2}; font-family: {fontFamily};">
+                <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2}; font-family: {fontFamily}, System-ui, Sans-serif, Arial, Serif;;">
                   {role}
                 </span>
                 {/if}
                 {#if role && departmentName}
-                <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2}; font-family: {fontFamily};">
+                <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2}; font-family: {fontFamily}, System-ui, Sans-serif, Arial, Serif;;">
                   -
                 </span>
                 {/if}
                 {#if departmentName}
-                <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2}; font-family: {fontFamily};">
+                <span style="font-size: {fontSize}px; text-transform: capitalize; color: {colorCode2}; font-family: {fontFamily}, System-ui, Sans-serif, Arial, Serif;;">
                   {departmentName}
                 </span>
                 {/if}
@@ -362,13 +362,13 @@
             <tr>
               <td>
                 {#if phoneNumber.length > 0}
-                <span style="font-size: {fontSize}px; color: {colorCode2}; font-family: {fontFamily};">
+                <span style="font-size: {fontSize}px; color: {colorCode2}; font-family: {fontFamily}, System-ui, Sans-serif, Arial, Serif;;">
                   <span style="font-weight: bold; color: {colorCode};">T</span>
                   <a href="tel:{phoneNumber.trim().replace('+', '00')}" title={m.phoneCall({ firstName, lastName, number: phoneNumber })} style="color: {colorCode2};">{phoneNumber}</a>
                 </span>
                 {/if}
                 {#if mobilePhoneNumber.length > 0}
-                <span style="font-size: {fontSize}px; color: {colorCode2}; font-family: {fontFamily};">
+                <span style="font-size: {fontSize}px; color: {colorCode2}; font-family: {fontFamily}, System-ui, Sans-serif, Arial, Serif;;">
                   <span style="font-weight: bold; color: {colorCode};">M</span>
                   <a href="tel:{mobilePhoneNumber.trim().replace('+', '00')}" title={m.phoneCall({ firstName, lastName, number: mobilePhoneNumber })} style="color: {colorCode2};">{mobilePhoneNumber}</a>
                 </span>
@@ -379,7 +379,7 @@
             <tr>
               <td>
                 {#if emailAddress.length > 0}
-                <span style="font-size: {fontSize}px; color: {colorCode2}; font-family: {fontFamily};">
+                <span style="font-size: {fontSize}px; color: {colorCode2}; font-family: {fontFamily}, System-ui, Sans-serif, Arial, Serif;;">
                   <span style="font-weight: bold; color: {colorCode};">E</span>
                   <a href="mailto:{emailAddress}" title={m.emailTo({ firstName, lastName, email: emailAddress })} style="color: {colorCode2};">{emailAddress}</a>
                 </span>
