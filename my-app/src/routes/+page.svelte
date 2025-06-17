@@ -142,7 +142,7 @@
             </select>
             <tip>{@html m.infoChangementLangue()}</tip>         
           </language-container>
-                    <font-container>
+          <font-container>
             <label for="fontFamily">{m.police()}</label>
             <select name="fontFamily" id="fontFamily" bind:value={fontFamily}>
               <option disabled selected>System-ui</option>
@@ -490,7 +490,7 @@
   h1 {
     margin: left;
   }
-
+  
   font-container, 
   colors-code-container {
     margin-bottom: .5em;
