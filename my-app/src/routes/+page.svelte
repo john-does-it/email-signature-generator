@@ -380,6 +380,7 @@
                 {/if}
               </td>
             </tr>
+            {/if}
             {#if emailAddress}
             <tr>
               <td>
@@ -391,7 +392,6 @@
                 {/if}
               </td>
             </tr>
-            {/if}
             {/if}
             {#if websiteURL ||githubPageURL || facebookPageURL || instagramPageUrl || linkedinPageURL || youtubePageUrl || tiktokPageUrl || xPageUrl}
             <tr>
@@ -464,7 +464,7 @@
     <p>{m.paragrapheSimpleEfficace()}</p>
     
     <h3>{m.openSource()}</h3>
-    <p>{m.paragrapheOpenSource()}</p>
+    <p>{@html m.paragrapheOpenSource()}</p>
     
     <h3>{m.gratuitSansPub()}</h3>
     <p>{m.paragrapheGratuit()}</p>

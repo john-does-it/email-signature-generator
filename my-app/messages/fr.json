@@ -79,11 +79,11 @@
   "simpleEfficace": "Simple et efficace",
   "paragrapheSimpleEfficace": "Ce générateur vous permet de créer une signature professionnelle en quelques clics, sans inscription ni prise de tête. Les champs sont personnalisables et la prévisualisation est instantanée.",
   "openSource": "Open source",
-  "paragrapheOpenSource": "Ce projet est entièrement open source. Vous pouvez consulter le code, contribuer à son amélioration ou l'adapter à vos besoins spécifiques.",
+  "paragrapheOpenSource": "<a href=\"https://github.com/john-does-it/email-signature-generator\" title=\"Accéder au repository\">Ce projet</a> est entièrement open source. Vous pouvez consulter le code, contribuer à son amélioration ou l'adapter à vos besoins spécifiques.",
   "gratuitSansPub": "100% gratuit et sans publicité",
   "paragrapheGratuit": "Pas de cookies, pas de pisteurs, pas de pubs. Juste un outil pensé pour vous simplifier la vie.",
   "quiEstDev": "Qui est le développeur de ce générateur de signature d'email ?",
-  "paragrapheDev": "Ce projet a été développé par <a href=\"https://johndoesit.be\" title=\"Accéder au site web de John Does it\">John Does it</a>",
+  "paragrapheDev": "Ce projet est développé par <a href=\"https://johndoesit.be\" title=\"Accéder au site web de John Does it\">John Does it</a>.",
   "credits": "Crédits",
   "creditIcons": "Icônes des réseaux sociaux : <a href=\"https://icons8.com\" title=\"Accéder au site web de icons8.com\">icons8.com</a>"
 }
