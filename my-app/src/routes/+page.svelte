@@ -149,9 +149,10 @@
             <select name="fontFamily" id="fontFamily" bind:value={fontFamily}>
               <option disabled selected>System-ui</option>
               <option value="System-ui">System-ui</option>
-              <option value="Serif">Serif</option>
-              <option value="Sans-Serif">Sans-serif</option>
               <option value="Monospace">Monospace</option>
+              <option value="Arial">Arial</option>
+              <option value="Sans-Serif">Sans-serif</option>
+              <option value="Serif">Serif</option>
             </select>
           </font-container>
           <colors-code-container>
