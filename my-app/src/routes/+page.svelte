@@ -57,8 +57,6 @@
     try {
       const config = JSON.parse(configurationText)
       
-      console.log(config.facebookPageURL)
-      
       if ('pictureStyle' in config) pictureStyle = config.pictureStyle
       if ('companyName' in config) companyName = config.companyName
       if ('websiteURL' in config) websiteURL = config.websiteURL
@@ -76,6 +74,7 @@
         fontSize = config.fontSize
         updateLineHeight(fontSize)
       }
+      
       if (config.selectedLanguage) {
         selectedLanguage = config.selectedLanguage
         setLocale(config.selectedLanguage)
@@ -104,8 +103,7 @@
   function updatePaddingBottom() {
     if (seoContentContainer && window.innerWidth < 1024) {
       seoContentContainer.style.paddingBottom = `${heightOfPreviewContainer}px`
-    } 
-    if (seoContentContainer && window.innerWidth > 1024) {
+    } else if (seoContentContainer && window.innerWidth > 1024) {
       seoContentContainer.style.paddingBottom = '0px'
     }
   }
@@ -144,7 +142,7 @@
             </select>
             <tip>{@html m.infoChangementLangue()}</tip>         
           </language-container>
-                    <font-container>
+          <font-container>
             <label for="fontFamily">{m.police()}</label>
             <select name="fontFamily" id="fontFamily" bind:value={fontFamily}>
               <option disabled selected>System-ui</option>
@@ -181,6 +179,7 @@
             {m.photo()}
             <input name="picture" id="picture" placeholder="https://i0.wp.com/faildesk.net/wp-content/uploads/2012/11/funny-sexy-fail-bill-gates.jpg" type="text" bind:value={picture}>
           </label>
+          <tip>{m.tipPicture()}</tip>
           {#if picture}
           <label for="pictureStyle">
             {m.stylePhoto()}
@@ -259,6 +258,14 @@
             {m.adresseEmail()}
             <input name="emailAddress" id="emailAddress" placeholder="hello@thefictivecompany.xyz" type="text" bind:value={emailAddress}>
           </label>
+          <errors-container>
+            {#if emailAddress.length > 0 && !emailAddress.includes('@')}
+            <error-container>{m.errorManqueArobase()}</error-container>
+            {/if}
+            {#if emailAddress.length > 0 && !emailAddress.includes('.')}
+            <error-container>{m.errorManquePoint()}</error-container>
+            {/if}
+          </errors-container>
         </fieldset>
         <fieldset>
           <legend>{m.liens()}</legend>
@@ -335,7 +342,6 @@
             {:else}
             <tr><td></td></tr>
             {/if}
-            
             {#if role || departmentName}
             <tr style="line-height: .75;">
               <td>
@@ -357,7 +363,6 @@
               </td>
             </tr>
             {/if}
-            
             {#if phoneNumber || mobilePhoneNumber}
             <tr>
               <td>
@@ -486,7 +491,7 @@
   h1 {
     margin: left;
   }
-
+  
   font-container, 
   colors-code-container {
     margin-bottom: .5em;
@@ -512,6 +517,7 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     column-gap: 2em;
   }
   
@@ -566,6 +572,10 @@
   
   errors-container error-container:last-child {
     margin-bottom: .5em;
+  }
+  
+  label ~ errors-container {
+    margin-top: .25em;
   }
   
   tip {
