@@ -235,7 +235,7 @@
           {/if}
           <label for="mobilePhoneNumber">
             {m.numeroPortable()}
-            <input name="mobilePhoneNumber" id="mobilePhoneNumber" placeholder="+32420424242" type="text" bind:value={mobilePhoneNumber}>
+            <input name="mobilePhoneNumber" id="mobilePhoneNumber" placeholder="+3242042424242" type="text" bind:value={mobilePhoneNumber}>
           </label>
           <tip>{m.tipNumeroPortable()}</tip>
           {#if mobilePhoneNumber}
