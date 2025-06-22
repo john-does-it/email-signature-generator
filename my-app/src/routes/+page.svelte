@@ -445,19 +445,19 @@
         </table>
       </preview-container>
     </preview-and-title-container>
-    <configuration-container>
-      <h2>{m.configurationJson()}</h2>
-      <example-configuration-container>
-        {exampleConfiguration}
-      </example-configuration-container>
-      <textarea name="json-configurator" bind:value={configurationText} placeholder="{m.jsonConfigurationPlaceHolder()}" rows="14"></textarea>
-      {#if configurationText.length === 0 || isJsonValid(configurationText) === false}
-      <button disabled>{m.appliquer()}</button>
-      {:else}
-      <button onclick={applyConfigurationFromText}>{m.appliquer()}</button>
-      {/if}
-    </configuration-container>
   </signature-generator-container>
+  <configuration-container>
+    <h2>{m.configurationJson()}</h2>
+    <example-configuration-container>
+      {exampleConfiguration}
+    </example-configuration-container>
+    <textarea name="json-configurator" bind:value={configurationText} placeholder="{m.jsonConfigurationPlaceHolder()}" rows="14"></textarea>
+    {#if configurationText.length === 0 || isJsonValid(configurationText) === false}
+    <button disabled>{m.appliquer()}</button>
+    {:else}
+    <button onclick={applyConfigurationFromText}>{m.appliquer()}</button>
+    {/if}
+  </configuration-container>
   <seo-content-container bind:this={seoContentContainer as HTMLDivElement} style={window.innerWidth < 1024 ? `padding-bottom: ${heightOfPreviewContainer}px;` : ''}> 
     <h2>{m.pourquoiUtiliser()}</h2>
     <h3>{m.simpleEfficace()}</h3>
@@ -516,16 +516,15 @@
   signature-generator-container {
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     column-gap: 2em;
   }
   
   form-and-title-container {
     width: 100%;
-    
-    @media(min-width: 1040px) {
-      max-width: 480px;
+
+    @media(min-width: 1024px) {
+      width: auto;
     }
   }
   
