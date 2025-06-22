@@ -1,7 +1,7 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "bonjour": "Bonjour",
-  "title": "✍️ Générateur de signature d'email personnalisée",
+  "title": "Générateur de signature d'email personnalisée",
   "metadescription": "Générez gratuitement une signature d'email professionnelle et personnalisée en ligne.",
   "genererVotreSignature": "Générer votre signature d'email personnalisée",
   "vosDonnees": "Vos données",
