@@ -83,5 +83,6 @@
   "quiEstDev": "Who developed this email signature generator?",
   "paragrapheDev": "This project is developed by <a href=\"https://johndoesit.be\" title=\"Visit John Does it website\">John Does it</a>.",
   "credits": "Credits",
-  "creditIcons": "Social media icons: <a href=\"https://icons8.com\" title=\"Visit icons8.com\">icons8.com</a>"
+  "creditIcons": "Social media icons: <a href=\"https://icons8.com\" title=\"Visit icons8.com\">icons8.com</a>",
+  "errorNeCommencePasAvecPlus": "🚨 The phone number should start with a '+'"
 }

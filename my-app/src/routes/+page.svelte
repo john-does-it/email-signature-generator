@@ -222,6 +222,9 @@
             {#if !phoneNumber.includes('+')}
             <error-container>{m.errorManquePlus()}</error-container>
             {/if}
+            {#if !phoneNumber.startsWith('+')}
+            <error-container>{m.errorNeCommencePasAvecPlus()}</error-container>
+            {/if}
             {#if phoneNumber.length < 11}
             <error-container>{m.errorNumeroFixeManquant({ count: phoneNumber.length })}</error-container>
             {/if}
@@ -242,6 +245,9 @@
           <errors-container>
             {#if !mobilePhoneNumber.includes('+')}
             <error-container>{m.errorManquePlus()}</error-container>
+            {/if}
+            {#if !mobilePhoneNumber.startsWith('+')}
+            <error-container>{m.errorNeCommencePasAvecPlus()}</error-container>
             {/if}
             {#if mobilePhoneNumber.length < 12}
             <error-container>{m.errorNumeroPortableManquant({ count: mobilePhoneNumber.length })}</error-container>
