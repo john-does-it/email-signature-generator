@@ -1,38 +1,91 @@
-# sv
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+# Email Signature Generator
 
-## Creating a project
+A modern web application built with SvelteKit that helps users create professional email signatures with ease.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
+
+- Multi-language support (English, French, Dutch)
+- Customizable signature templates
+- Real-time preview
+- Social media integration
+- Responsive design
+- Easy copy-paste functionality
+
+## Tech Stack
+
+- SvelteKit 2.16.0
+- TypeScript 5.0.0
+- Paraglide.js 2.0.13 for i18n
+- Vite 6.2.5
+- Testing Suite (Vitest 3.0.0 + Playwright 1.49.1)
+- Deployment: Vercel adapter (Node.js adapter also available)
+
+## Getting Started
 
 ```bash
-# create a new project in the current directory
-npx sv create
+# Clone the repository
+git clone https://github.com/john-does-it/email-signature-generator.git
 
-# create a new project in my-app
-npx sv create my-app
-```
+# Navigate to project directory
+cd email-signature-generator/my-app
 
-## Developing
+# Install dependencies
+npm install
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
+# Start development server
 npm run dev
 
-# or start the server and open the app in a new browser tab
+# Open in browser (optional)
 npm run dev -- --open
 ```
 
-## Building
+## Deployment
 
-To create a production version of your app:
+The project uses `@sveltejs/adapter-vercel` by default for Vercel deployment. If you want to deploy elsewhere, you can switch to another adapter:
 
 ```bash
-npm run build
+# For Node.js environments (already included in devDependencies)
+npm i -D @sveltejs/adapter-node
+
+# Update svelte.config.js to use the new adapter
 ```
 
-You can preview the production build with `npm run preview`.
+## Testing
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+```bash
+# Run all tests
+npm test
+
+# Run unit tests only
+npm run test:unit
+
+# Run e2e tests
+npm run test:e2e
+```
+
+## License & Attribution
+
+This project is open source and available under the MIT License.
+
+### Important Note on Usage
+
+If you use this project as a base for your work, please include the following attribution:
+
+```markdown
+This project is [fork/inspired by] the Email Signature Generator:
+- Website: https://https://johndoesit-email-signature.vercel.app
+- GitHub: https://github.com/john-does-it/email-signature-generator
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📫 Contact
+
+For questions or support, please [open an issue](https://github.com/john-does-it/email-signature-generator/issues) on GitHub.
