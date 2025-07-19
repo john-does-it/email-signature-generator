@@ -86,6 +86,6 @@ This project is [fork/inspired by] the Email Signature Generator:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📫 Contact
+## Contact
 
 For questions or support, please [open an issue](https://github.com/john-does-it/email-signature-generator/issues) on GitHub.
