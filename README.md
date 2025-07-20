@@ -1,7 +1,7 @@
 
 # Email Signature Generator
 
-A modern web application built with SvelteKit that helps users create professional email signatures with ease.
+A web application built with SvelteKit that helps users create professional email signatures with ease.
 
 ## Features
 
