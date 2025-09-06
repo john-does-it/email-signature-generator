@@ -51,19 +51,6 @@ npm i -D @sveltejs/adapter-node
 # Update svelte.config.js to use the new adapter
 ```
 
-## Testing
-
-```bash
-# Run all tests
-npm test
-
-# Run unit tests only
-npm run test:unit
-
-# Run e2e tests
-npm run test:e2e
-```
-
 ## License & Attribution
 
 This project is open source and available under the MIT License.
@@ -80,11 +67,7 @@ This project is [fork/inspired by] the Email Signature Generator:
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Feel free to submit a Pull Request
 
 ## Contact
 
