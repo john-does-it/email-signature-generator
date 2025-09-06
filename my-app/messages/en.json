@@ -39,7 +39,7 @@
   "altGenericPhoto": "Profile picture",
   "altPhoto": "Picture of {firstName} {lastName}",
   "carree": "Square",
-  "ronde": "Rounded",
+  "ronde": "Round",
   "altWebsite": "Website icon",
   "altGithub": "Github icon",
   "altFacebook": "Facebook icon",
@@ -84,5 +84,6 @@
   "paragrapheDev": "This project is developed by <a href=\"https://johndoesit.be\" title=\"Visit John Does it website\">John Does it</a>.",
   "credits": "Credits",
   "creditIcons": "Social media icons: <a href=\"https://icons8.com\" title=\"Visit icons8.com\">icons8.com</a>",
-  "errorNeCommencePasAvecPlus": "🚨 The phone number should start with a '+'"
+  "errorNeCommencePasAvecPlus": "🚨 The phone number should start with a '+'",
+  "arrondie": "Slightly round"
 }

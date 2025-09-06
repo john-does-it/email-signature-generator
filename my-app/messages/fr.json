@@ -86,5 +86,6 @@
   "paragrapheDev": "Ce projet est développé par <a href=\"https://johndoesit.be\" title=\"Accéder au site web de John Does it\">John Does it</a>.",
   "credits": "Crédits",
   "creditIcons": "Icônes des réseaux sociaux : <a href=\"https://icons8.com\" title=\"Accéder au site web de icons8.com\">icons8.com</a>",
-  "errorNeCommencePasAvecPlus": "🚨 Le numéro de téléphone doit commencer avec un '+'"
+  "errorNeCommencePasAvecPlus": "🚨 Le numéro de téléphone doit commencer avec un '+'",
+  "arrondie": "Légérement arrondie"
 }

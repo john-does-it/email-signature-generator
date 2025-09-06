@@ -84,5 +84,6 @@
   "paragrapheDev": "Dit project werd ontwikkeld door <a href=\"https://johndoesit.be\" title=\"Bezoek de website van John Does it\">John Does it</a>.",
   "credits": "Credits",
   "creditIcons": "Socialmedia-iconen: <a href=\"https://icons8.com\" title=\"Bezoek icons8.com\">icons8.com</a>",
-  "errorNeCommencePasAvecPlus": "🚨 Het telefoonnummer moet beginnen met een '+'"
+  "errorNeCommencePasAvecPlus": "🚨 Het telefoonnummer moet beginnen met een '+'",
+  "arrondie": "Licht rond"
 }

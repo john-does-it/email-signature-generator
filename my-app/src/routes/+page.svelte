@@ -7,7 +7,7 @@
   
   let fontFamily: string = $state('System-ui')
   let picture: string = $state('https://i0.wp.com/faildesk.net/wp-content/uploads/2012/11/funny-sexy-fail-bill-gates.jpg') 
-  let pictureStyle: 'square' | 'round' = $state('square')
+  let pictureStyle: 'square' | 'round' | 'slightly-round' = $state('square')
   let colorCode: string = $state('#000000')
   let colorCode2: string = $state('#121212')
   let fontSize: number = $state(14)
@@ -186,6 +186,7 @@
             <select bind:value={pictureStyle} id="pictureStyle">
               <option value="square">{m.carree()}</option>
               <option value="round">{m.ronde()}</option>
+              <option value="slightly-round">{m.arrondie()}</option>
             </select>
           </label>
           {/if}
@@ -319,7 +320,15 @@
             {#if picture}
             <tr>
               <td>
-                <img src={picture} alt={m.altPhoto({firstName, lastName})} width=100 style="border-radius: { pictureStyle === "round" ? 100 : 0}%;">
+                {#if pictureStyle === "square"}
+                  <img src={picture} alt={m.altPhoto({firstName, lastName})} width=100>
+                {/if}
+                {#if pictureStyle === "round"}
+                  <img src={picture} alt={m.altPhoto({firstName, lastName})} width=100 style="border-radius: 100%;">
+                {/if}
+                {#if pictureStyle === "slightly-round"}
+                  <img src={picture} alt={m.altPhoto({firstName, lastName})} width=100 style="border-radius: 8px;">
+                {/if}
               </td>
             </tr>
             {/if}
