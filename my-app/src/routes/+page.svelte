@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte"
   import { fade } from "svelte/transition"
-  
+
   import { m } from "$lib/paraglide/messages"
   import { getLocale, setLocale } from "$lib/paraglide/runtime"
-  
+
   let fontFamily: string = $state('System-ui')
   let picture: string = $state('https://i0.wp.com/faildesk.net/wp-content/uploads/2012/11/funny-sexy-fail-bill-gates.jpg') 
   let pictureStyle: 'square' | 'round' | 'slightly-round' = $state('square')
@@ -30,12 +30,12 @@
   let selectedLanguage: LanguageAvailable = $state('fr')
   let lineHeight: number = $state(1.2)
   let visible: boolean = $state(false)
-  
+
   let heightOfPreviewContainer = $state()
   let seoContentContainer: HTMLDivElement | undefined = $state()
-  
+
   let configurationText: string = $state('')
-  
+
   let exampleConfiguration = $derived(JSON.stringify({
     pictureStyle,
     companyName,
@@ -52,11 +52,45 @@
     fontSize,
     selectedLanguage
   }, null, 2))
-  
+
+  // ---------- Phone validation helpers (Rune-friendly) ----------
+  const allowedCharRegex = /[^0-9+\s()\-]/ // flags any char NOT allowed
+  const digitsOnly = (n: string) => n.replace(/\D/g, '')
+
+  // Normalize (trim) inputs via $derived values
+  const normPhone = $derived(phoneNumber.trim())
+  const normMobile = $derived(mobilePhoneNumber.trim())
+
+  // Leading + checks
+  const phoneHasLeadingPlus = $derived(/^\+/.test(normPhone))
+  const mobileHasLeadingPlus = $derived(/^\+/.test(normMobile))
+
+  const phoneHasExtraPlus = $derived(normPhone.slice(1).includes('+'))
+  const mobileHasExtraPlus = $derived(normMobile.slice(1).includes('+'))
+
+  // Invalid characters (anything outside digits, +, space, (), -)
+  const phoneHasInvalidChars = $derived(allowedCharRegex.test(normPhone))
+  const mobileHasInvalidChars = $derived(allowedCharRegex.test(normMobile))
+
+  // E.164-ish length (8–15 digits excluding +)
+  const phoneDigitsLen = $derived(digitsOnly(normPhone).length)
+  const mobileDigitsLen = $derived(digitsOnly(normMobile).length)
+
+  const phoneLenInvalid = $derived(phoneDigitsLen < 8 || phoneDigitsLen > 15)
+  const mobileLenInvalid = $derived(mobileDigitsLen < 8 || mobileDigitsLen > 15)
+
+  // tel: href builder — keep a single leading + and digits
+  const toTelHref = (n: string) => {
+    const t = n.trim()
+    const plus = t.startsWith('+') ? '+' : ''
+    const digits = t.replace(/\D/g, '')
+    return 'tel:' + plus + digits
+  }
+
   function applyConfigurationFromText() {
     try {
       const config = JSON.parse(configurationText)
-      
+
       if ('pictureStyle' in config) pictureStyle = config.pictureStyle
       if ('companyName' in config) companyName = config.companyName
       if ('websiteURL' in config) websiteURL = config.websiteURL
@@ -69,12 +103,12 @@
       if ('xPageUrl' in config) xPageUrl = config.xPageUrl
       if ('colorCode' in config) colorCode = config.colorCode
       if ('colorCode2' in config) colorCode2 = config.colorCode2
-      
+
       if (config.fontSize) {
         fontSize = config.fontSize
         updateLineHeight(fontSize)
       }
-      
+
       if (config.selectedLanguage) {
         selectedLanguage = config.selectedLanguage
         setLocale(config.selectedLanguage)
@@ -84,7 +118,7 @@
       return false
     }
   }
-  
+
   function isJsonValid(json: string): boolean {
     try {
       JSON.parse(json)
@@ -93,13 +127,13 @@
       return false
     }
   }
-  
+
   function updateLineHeight(fontSize: number) {
     if (fontSize === 12) lineHeight = 1
     if (fontSize === 14) lineHeight = 1.2
     if (fontSize >= 16) lineHeight = 1.4
   }
-  
+
   function updatePaddingBottom() {
     if (seoContentContainer && window.innerWidth < 1024) {
       seoContentContainer.style.paddingBottom = `${heightOfPreviewContainer}px`
@@ -107,7 +141,7 @@
       seoContentContainer.style.paddingBottom = '0px'
     }
   }
-  
+
   onMount(() => {
     selectedLanguage = getLocale()
     visible = true
@@ -117,8 +151,8 @@
 <svelte:window on:resize={updatePaddingBottom} />
 
 <svelte:head>
-<title>{m.title()}</title>
-<meta name="description" content="{m.metadescription()}">
+  <title>{m.title()}</title>
+  <meta name="description" content="{m.metadescription()}">
 </svelte:head>
 
 {#if visible}
@@ -218,59 +252,55 @@
             <input name="phoneNumber" id="phoneNumber" placeholder="+32420424242" type="text" bind:value={phoneNumber}>
           </label>
           <tip>{m.tipNumeroFixe()}</tip>
-          {#if phoneNumber}
+          {#if normPhone}
           <errors-container>
-            {#if !phoneNumber.includes('+')}
-            <error-container>{m.errorManquePlus()}</error-container>
+            {#if !phoneHasLeadingPlus}
+              <error-container>{m.errorNeCommencePasAvecPlus()}</error-container>
             {/if}
-            {#if !phoneNumber.startsWith('+')}
-            <error-container>{m.errorNeCommencePasAvecPlus()}</error-container>
+            {#if phoneHasExtraPlus}
+              <error-container>{m.errorPlusEnTrop()}</error-container>
             {/if}
-            {#if phoneNumber.length < 11}
-            <error-container>{m.errorNumeroFixeManquant({ count: phoneNumber.length })}</error-container>
+            {#if phoneHasInvalidChars}
+              <error-container>{m.errorNumeroCaracteresInvalides()}</error-container>
             {/if}
-            {#if phoneNumber.length > 11}
-            <error-container>{m.errorNumeroFixeTropLong({ count: phoneNumber.length })}</error-container>
-            {/if}
-            {#if /[^\d+]/.test(phoneNumber)}
-            <error-container>{m.errorNumeroCaracteresInvalides()}</error-container>
+            {#if phoneLenInvalid}
+              <error-container>{m.errorLongueurE164()}</error-container>
             {/if}
           </errors-container>
           {/if}
+
           <label for="mobilePhoneNumber">
             {m.numeroPortable()}
             <input name="mobilePhoneNumber" id="mobilePhoneNumber" placeholder="+3242042424242" type="text" bind:value={mobilePhoneNumber}>
           </label>
           <tip>{m.tipNumeroPortable()}</tip>
-          {#if mobilePhoneNumber}
+          {#if normMobile}
           <errors-container>
-            {#if !mobilePhoneNumber.includes('+')}
-            <error-container>{m.errorManquePlus()}</error-container>
+            {#if !mobileHasLeadingPlus}
+              <error-container>{m.errorNeCommencePasAvecPlus()}</error-container>
             {/if}
-            {#if !mobilePhoneNumber.startsWith('+')}
-            <error-container>{m.errorNeCommencePasAvecPlus()}</error-container>
+            {#if mobileHasExtraPlus}
+              <error-container>{m.errorPlusEnTrop()}</error-container>
             {/if}
-            {#if mobilePhoneNumber.length < 12}
-            <error-container>{m.errorNumeroPortableManquant({ count: mobilePhoneNumber.length })}</error-container>
+            {#if mobileHasInvalidChars}
+              <error-container>{m.errorNumeroCaracteresInvalides()}</error-container>
             {/if}
-            {#if mobilePhoneNumber.length > 12}
-            <error-container>{m.errorNumeroPortableTropLong({ count: mobilePhoneNumber.length })}</error-container>
-            {/if}
-            {#if /[^\d+]/.test(mobilePhoneNumber)}
-            <error-container>{m.errorNumeroCaracteresInvalides()}</error-container>
+            {#if mobileLenInvalid}
+              <error-container>{m.errorLongueurE164()}</error-container>
             {/if}
           </errors-container>
           {/if}        
+
           <label for="emailAddress">
             {m.adresseEmail()}
             <input name="emailAddress" id="emailAddress" placeholder="hello@thefictivecompany.xyz" type="text" bind:value={emailAddress}>
           </label>
           <errors-container>
             {#if emailAddress.length > 0 && !emailAddress.includes('@')}
-            <error-container>{m.errorManqueArobase()}</error-container>
+              <error-container>{m.errorManqueArobase()}</error-container>
             {/if}
             {#if emailAddress.length > 0 && !emailAddress.includes('.')}
-            <error-container>{m.errorManquePoint()}</error-container>
+              <error-container>{m.errorManquePoint()}</error-container>
             {/if}
           </errors-container>
         </fieldset>
@@ -311,6 +341,7 @@
         </fieldset>
       </form>
     </form-and-title-container>
+
     <preview-and-title-container bind:clientHeight={heightOfPreviewContainer}>
       <h2>{m.previsualisation()}</h2>
       <preview-container>
@@ -332,6 +363,7 @@
               </td>
             </tr>
             {/if}
+
             {#if firstName || lastName}
             <tr>
               <td>
@@ -346,6 +378,7 @@
               </td>
             </tr>
             {/if}
+
             {#if companyName}
             <tr>
               <td>
@@ -357,6 +390,7 @@
             {:else}
             <tr><td></td></tr>
             {/if}
+
             {#if role || departmentName}
             <tr style="line-height: .75;">
               <td>
@@ -378,24 +412,26 @@
               </td>
             </tr>
             {/if}
+
             {#if phoneNumber || mobilePhoneNumber}
             <tr>
               <td>
-                {#if phoneNumber.length > 0}
+                {#if normPhone.length > 0}
                 <span style="font-size: {fontSize}px; color: {colorCode2}; font-family: {fontFamily}, System-ui, Sans-serif, Arial, Serif;;">
                   <span style="font-weight: bold; color: {colorCode};">T</span>
-                  <a href="tel:{phoneNumber.trim().replace('+', '00')}" title={m.phoneCall({ firstName, lastName, number: phoneNumber })} style="color: {colorCode2};">{phoneNumber}</a>
+                  <a href={toTelHref(normPhone)} title={m.phoneCall({ firstName, lastName, number: normPhone })} style="color: {colorCode2};">{phoneNumber}</a>
                 </span>
                 {/if}
-                {#if mobilePhoneNumber.length > 0}
+                {#if normMobile.length > 0}
                 <span style="font-size: {fontSize}px; color: {colorCode2}; font-family: {fontFamily}, System-ui, Sans-serif, Arial, Serif;;">
                   <span style="font-weight: bold; color: {colorCode};">M</span>
-                  <a href="tel:{mobilePhoneNumber.trim().replace('+', '00')}" title={m.phoneCall({ firstName, lastName, number: mobilePhoneNumber })} style="color: {colorCode2};">{mobilePhoneNumber}</a>
+                  <a href={toTelHref(normMobile)} title={m.phoneCall({ firstName, lastName, number: normMobile })} style="color: {colorCode2};">{mobilePhoneNumber}</a>
                 </span>
                 {/if}
               </td>
             </tr>
             {/if}
+
             {#if emailAddress}
             <tr>
               <td>
@@ -408,6 +444,7 @@
               </td>
             </tr>
             {/if}
+
             {#if websiteURL ||githubPageURL || facebookPageURL || instagramPageUrl || linkedinPageURL || youtubePageUrl || tiktokPageUrl || xPageUrl}
             <tr>
               <td>
@@ -461,6 +498,7 @@
       </preview-container>
     </preview-and-title-container>
   </signature-generator-container>
+
   <configuration-container>
     <h2>{m.configurationJson()}</h2>
     <example-configuration-container>
@@ -468,25 +506,26 @@
     </example-configuration-container>
     <textarea name="json-configurator" bind:value={configurationText} placeholder="{m.jsonConfigurationPlaceHolder()}" rows="14"></textarea>
     {#if configurationText.length === 0 || isJsonValid(configurationText) === false}
-    <button disabled>{m.appliquer()}</button>
+      <button disabled>{m.appliquer()}</button>
     {:else}
-    <button onclick={applyConfigurationFromText}>{m.appliquer()}</button>
+      <button onclick={applyConfigurationFromText}>{m.appliquer()}</button>
     {/if}
   </configuration-container>
+
   <seo-content-container bind:this={seoContentContainer as HTMLDivElement} style={window.innerWidth < 1024 ? `padding-bottom: ${heightOfPreviewContainer}px;` : ''}> 
     <h2>{m.pourquoiUtiliser()}</h2>
     <h3>{m.simpleEfficace()}</h3>
     <p>{m.paragrapheSimpleEfficace()}</p>
-    
+
     <h3>{m.openSource()}</h3>
     <p>{@html m.paragrapheOpenSource()}</p>
-    
+
     <h3>{m.gratuitSansPub()}</h3>
     <p>{m.paragrapheGratuit()}</p>
-    
+
     <h2>{m.quiEstDev()}</h2>
     <p>{@html m.paragrapheDev()}</p>
-    
+
     <h2>{m.credits()}</h2>
     <p>{@html m.creditIcons()}</p>
   </seo-content-container>  
@@ -502,110 +541,109 @@
     margin: auto;
     border-radius: 1em;
   }
-  
+
   h1 {
     margin: left;
   }
-  
+
   font-container, 
   colors-code-container {
     margin-bottom: .5em;
   }
-  
+
   font-container,
   language-container{
     display: flex;
     flex-flow: column;
   }
-  
+
   colors-code-container {
     display: flex;
     flex-wrap: wrap;
     column-gap: 1em;
   }
-  
+
   language-container {
     flex-flow: column;
   }
-  
+
   signature-generator-container {
     width: 100%;
     display: flex;
     justify-content: space-between;
     column-gap: 2em;
   }
-  
+
   form-and-title-container {
     width: 100%;
-
     @media(min-width: 1024px) {
       width: auto;
     }
   }
-  
+
   form-and-title-container h2 {
     margin: 0 0 .5em 0;
   }
-  
+
   form, 
   label {
     display: flex;
     flex-flow: column;
   }
-  
+
   form {
     width: 100%;
     gap: .5em;
     margin-bottom: 2em;
   }
-  
+
   legend {
     font-weight: bold;
     padding: 0 1em;
   }
-  
+
   fieldset {
     margin-top: -.25em;
     padding-bottom: 1em;
     border: 1px solid var(--soft-sand);
     border-radius: 4px;
   }
-  
+
   label {
     font-size: 12px;
   }
-  
+
   label + label:not([for="colorCode2"]) {
     margin-top: .5em;
   }
-  
+
   errors-container {
     display: flex;
     flex-flow: column;
   }
-  
+
   errors-container error-container:last-child {
     margin-bottom: .5em;
   }
-  
+
   label ~ errors-container {
     margin-top: .25em;
   }
-  
+
   tip {
     display: block;
     margin-bottom: .5em;
     font-style: italic;
   }
-  
+
   :global :has(tip ~ error-container) {
     margin-bottom: 0;
   }
-  
+
   tip, error-container {
     font-size: 12px;
   }
-  
+
   preview-and-title-container {
     width: 100%;
     position: fixed;
@@ -613,50 +651,45 @@
     left: 0;
     background-color: var(--black);
     border-top: 1px solid var(--soft-sand);
-    
     @media(min-width: 1024px) {
       width: 480px;
       position: relative;
       border-top: none;
     }
-    
     h2 {
       margin-left: 1em;
-      
       @media(min-width: 1024px) {
         margin-left: 0;
         margin-top: 0;
       }
     }
   }
-  
+
   table {
     height: fit-content;
   }
-  
+
   preview-container {
     background-color: var(--white);
     display: block;
     padding: 1em;
     border-radius: 12px;
   }
-  
+
   configuration-container {
     width: 100%;
     display: flex;
     flex-flow: column;
     gap: 1em;
-    
     h2 {
       margin-top: 2em;
       margin-bottom: 0;
     }
-    
     button {
       align-self: flex-end;
     }
   }
-  
+
   textarea {
     resize: vertical;
   }

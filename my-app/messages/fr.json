@@ -62,8 +62,8 @@
   "emailTo": "Envoyer un email à {firstName} {lastName} via {email}",
   "phoneCall": "Appeler {firstName} {lastName} au {number}",
   "tipPicture": "Utilisez un format carré, idéalement de 100px par 100px",
-  "tipNumeroFixe": "Format incluant le suffixe de votre pays, sans espace (exemple : +32424242)",
-  "tipNumeroPortable": "Format incluant le suffixe de votre pays, sans espace (exemple : +32420424242)",
+  "tipNumeroFixe": "Format incluant le suffixe de votre pays (ex : +32)",
+  "tipNumeroPortable": "Format incluant le suffixe de votre pays (ex : +32)",
   "errorManqueArobase": "🚨 Le symbole '@' est manquant",
   "errorManquePoint": "🚨 Le symbole '.' est manquant",
   "errorManquePlus": "🚨 Le symbole '+' est manquant",
@@ -71,7 +71,7 @@
   "errorNumeroFixeTropLong": "🚨 Il y a des caractères en trop. Il doit y en avoir 11 au total et il y en a actuellement {count}.",
   "errorNumeroPortableManquant": "🚨 Il manque des caractères. Il doit y en avoir 12 au total et il y en a actuellement seulement {count}.",
   "errorNumeroPortableTropLong": "🚨 Il y a des caractères en trop. Il doit y en avoir 12 au total et il y en a actuellement {count}.",
-  "errorNumeroCaracteresInvalides": "🚨 La chaine de caractère ne peut contenir que le symbole '+' et des nombres.",
+  "errorNumeroCaracteresInvalides": "🚨 La chaine de caractère ne peut contenir que les symbole '+', '(', ')', '-' et des nombres.",
   "configurationJson": "Configuration JSON",
   "jsonConfigurationPlaceHolder": "Collez ici votre configuration JSON…",
   "appliquer": "Appliquer",
@@ -87,5 +87,7 @@
   "credits": "Crédits",
   "creditIcons": "Icônes des réseaux sociaux : <a href=\"https://icons8.com\" title=\"Accéder au site web de icons8.com\">icons8.com</a>",
   "errorNeCommencePasAvecPlus": "🚨 Le numéro de téléphone doit commencer avec un '+'",
-  "arrondie": "Légérement arrondie"
+  "arrondie": "Légérement arrondie",
+  "errorPlusEnTrop": "🚨 Il y a un \"+\" en trop.",
+  "errorLongueurE164": "🚨 Le numéro doit contenir entre 8 et 15 chiffres (hors \"+\")."
 }

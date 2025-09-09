@@ -61,16 +61,12 @@
   "emailTo": "Send an email to {firstName} {lastName} via {email}",
   "phoneCall": "Call {firstName} {lastName} at {number}",
   "tipPicture": "Use a square format, ideally 100px by 100px",
-  "tipNumeroFixe": "Format including your country prefix without any space (example: +32424242)",
-  "tipNumeroPortable": "Format including your country prefix without any space (example: +32420424242)",
+  "tipNumeroFixe": "Format including your country prefix (example: +32)",
+  "tipNumeroPortable": "Format including your country prefix (example: +32)",
   "errorManqueArobase": "🚨 The '@' symbol is missing",
   "errorManquePoint": "🚨 The '.' symbol is missing",
   "errorManquePlus": "🚨 The '+' symbol is missing",
-  "errorNumeroFixeManquant": "🚨 Missing characters. It must be exactly 11, but it's currently only {count}.",
-  "errorNumeroFixeTropLong": "🚨 Too many characters. It must be exactly 11, but it's currently {count}.",
-  "errorNumeroPortableManquant": "🚨 Missing characters. It must be exactly 12, but it's currently only {count}.",
-  "errorNumeroPortableTropLong": "🚨 Too many characters. It must be exactly 12, but it's currently {count}.",
-  "errorNumeroCaracteresInvalides": "🚨 Only the '+' symbol and numbers are allowed.",
+  "errorNumeroCaracteresInvalides": "🚨 Only the '+', '(', ')', '-' symbols and numbers are allowed.",
   "configurationJson": "JSON Configuration",
   "jsonConfigurationPlaceHolder": "Paste your JSON configuration here...",
   "appliquer": "Apply",
@@ -85,5 +81,7 @@
   "paragrapheDev": "This project is developed by <a href=\"https://johndoesit.be\" title=\"Visit John Does it website\">John Does it</a>.",
   "credits": "Credits",
   "creditIcons": "Social media icons: <a href=\"https://icons8.com\" title=\"Visit icons8.com\">icons8.com</a>",
-  "errorNeCommencePasAvecPlus": "🚨 The phone number should start with a '+'"
+  "errorNeCommencePasAvecPlus": "🚨 The phone number should start with a '+'",
+  "errorPlusEnTrop": "🚨 There's an extra \"+\".",
+  "errorLongueurE164": "🚨 The number must contain between 8 and 15 digits (excluding \"+\")."
 }
