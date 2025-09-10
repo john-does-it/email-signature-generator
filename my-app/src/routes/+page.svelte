@@ -153,6 +153,16 @@
 <svelte:head>
   <title>{m.title()}</title>
   <meta name="description" content="{m.metadescription()}">
+  <meta name="keywords" content="{m.metakeywords()}">
+  <meta name="author" content="{m.metaauthor()}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{m.title()}">
+  <meta property="og:description" content="{m.metadescription()}">
+  <meta property="og:url" content="{m.metaurl()}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{m.title()}">
+  <meta name="twitter:description" content="{m.metadescription()}">
+  <link rel="canonical" href="{m.metaurl()}">
 </svelte:head>
 
 {#if visible}

@@ -89,5 +89,8 @@
   "errorNeCommencePasAvecPlus": "🚨 Le numéro de téléphone doit commencer avec un '+'",
   "arrondie": "Légérement arrondie",
   "errorPlusEnTrop": "🚨 Il y a un \"+\" en trop.",
-  "errorLongueurE164": "🚨 Le numéro doit contenir entre 8 et 15 chiffres (hors \"+\")."
+  "errorLongueurE164": "🚨 Le numéro doit contenir entre 8 et 15 chiffres (hors \"+\").",
+  "metakeywords": "générateur de signature email, signature personnalisée, générateur open source",
+  "metaauthor": "John Does it (Jonathan Schoonbroodt)",
+  "metaurl": "https://johndoesit-email-signature.vercel.app/fr"
 }

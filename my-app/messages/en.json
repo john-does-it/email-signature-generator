@@ -83,5 +83,8 @@
   "creditIcons": "Social media icons: <a href=\"https://icons8.com\" title=\"Visit icons8.com\">icons8.com</a>",
   "errorNeCommencePasAvecPlus": "🚨 The phone number should start with a '+'",
   "errorPlusEnTrop": "🚨 There's an extra \"+\".",
-  "errorLongueurE164": "🚨 The number must contain between 8 and 15 digits (excluding \"+\")."
+  "errorLongueurE164": "🚨 The number must contain between 8 and 15 digits (excluding \"+\").",
+  "metakeywords": "email signature generator, custom signature, open source generator",
+  "metaauthor": "John Does it (Jonathan Schoonbroodt)",
+  "metaurl": "https://johndoesit-email-signature.vercel.app/en"
 }

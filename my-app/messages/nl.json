@@ -83,5 +83,8 @@
   "arrondie": "Licht rond",
   "errorPlusEnTrop": "🚨 Er staat een extra \"+\".",
   "errorLongueurE164": "🚨 Het nummer moet tussen 8 en 15 cijfers bevatten (exclusief \"+\").",
-  "errorNeCommencePasAvecPlus": "🚨 Het telefoonnummer moet beginnen met een '+'"
+  "errorNeCommencePasAvecPlus": "🚨 Het telefoonnummer moet beginnen met een '+'",
+  "metakeywords": "e-mailhandtekening generator, aangepaste handtekening, open source generator",
+  "metaauthor": "John Does it (Jonathan Schoonbroodt)",
+  "metaurl": "https://johndoesit-email-signature.vercel.app/nl"
 }
