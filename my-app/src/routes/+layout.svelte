@@ -1,6 +1,10 @@
 <script>
 	import { page } from '$app/state'
 	import { locales, localizeHref } from '$lib/paraglide/runtime'
+  
+  import { dev } from '$app/environment'
+	import { injectAnalytics } from '@vercel/analytics/sveltekit'
+	injectAnalytics({ mode: dev ? 'development' : 'production' })
 </script>
 
 <slot></slot>
