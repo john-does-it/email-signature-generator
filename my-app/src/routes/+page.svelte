@@ -684,6 +684,12 @@
     display: block;
     padding: 1em;
     border-radius: 12px;
+
+    @media(min-width: 1024px) {
+      position: sticky;
+      top: 2em;
+      margin-bottom: 2em;
+    }
   }
 
   configuration-container {
