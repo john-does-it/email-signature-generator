@@ -661,11 +661,13 @@
     left: 0;
     background-color: var(--black);
     border-top: 1px solid var(--soft-sand);
+
     @media(min-width: 1024px) {
       width: 480px;
       position: relative;
       border-top: none;
     }
+
     h2 {
       margin-left: 1em;
       @media(min-width: 1024px) {
@@ -697,10 +699,12 @@
     display: flex;
     flex-flow: column;
     gap: 1em;
+
     h2 {
       margin-top: 2em;
       margin-bottom: 0;
     }
+    
     button {
       align-self: flex-end;
     }
