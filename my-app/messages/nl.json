@@ -52,6 +52,8 @@
   "paragrapheOpenSource": "<a href=\"https://github.com/john-does-it/email-signature-generator\" title=\"Bekijk de repository\">Dit project</a> is volledig open source. Je kunt de code bekijken, bijdragen aan verbeteringen of het aanpassen aan je eigen behoeften.",
   "paragrapheSimpleEfficace": "Met deze generator maak je in enkele klikken een professionele e-mailhandtekening. Geen account nodig, geen gedoe. De velden zijn aanpasbaar en de voorbeeldweergave is direct zichtbaar.",
   "phoneCall": "Bel {firstName} {lastName} op {number}",
+  "photo": "Foto URL",
+  "stylePhoto": "Stijl van de foto",
   "police": "Lettertype",
   "pourquoiUtiliser": "Waarom deze e-mailhandtekeninggenerator gebruiken?",
   "prenom": "Voornaam",

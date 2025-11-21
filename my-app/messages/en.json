@@ -86,5 +86,7 @@
   "urlX": "Your X page URL",
   "urlYoutube": "Your YouTube page URL",
   "vosDonnees": "Your data",
-  "vosInformations": "Your information"
+  "vosInformations": "Your information",
+  "photo": "Photo URL",
+  "stylePhoto": "Photo style"
 }
